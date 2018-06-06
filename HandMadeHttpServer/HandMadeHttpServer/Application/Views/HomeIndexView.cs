@@ -10,7 +10,8 @@ namespace HandMadeHttpServer.Application.Views
 
         public string View()
         {
-            return "<body><h1>Welcome</h1></body>";
+            return "<body><h1>By the cake</h1></body>" +
+                   "<body><h2> Enjoy our awesome cakes</h2></body>";
         }
     }
 }

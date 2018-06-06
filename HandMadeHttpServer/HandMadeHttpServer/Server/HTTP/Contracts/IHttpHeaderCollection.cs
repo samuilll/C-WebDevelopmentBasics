@@ -10,6 +10,6 @@ namespace HandMadeHttpServer.Server.HTTP.Contracts
 
         bool ContainsKey(string key);
 
-        HttpHeader GetHeader(string key);
+        ICollection<HttpHeader> GetHeader(string key);
     }
 }

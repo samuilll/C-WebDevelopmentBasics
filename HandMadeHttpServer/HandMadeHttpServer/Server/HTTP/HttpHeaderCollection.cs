@@ -10,18 +10,25 @@ namespace HandMadeHttpServer.Server.HTTP
 
     public class HttpHeaderCollection : IHttpHeaderCollection
     {
-        private readonly Dictionary<string, HttpHeader> headers;
+        private readonly Dictionary<string, ICollection<HttpHeader>> headers;
 
         public HttpHeaderCollection()
         {
-            this.headers = new Dictionary<string, HttpHeader>();
+            this.headers = new Dictionary<string, ICollection<HttpHeader>>();
         }
 
         public void Add(HttpHeader header)
         {
             CoreValidator.ThrowIfNull(header, nameof(header));
 
-            this.headers[header.Key] = header;
+            var headerKey = header.Key;
+
+            if (!this.headers.ContainsKey(headerKey))
+            {
+                this.headers[header.Key] = new List<HttpHeader>();
+            }
+
+            this.headers[headerKey].Add(header);
         }
 
         public bool ContainsKey(string key)
@@ -32,18 +39,35 @@ namespace HandMadeHttpServer.Server.HTTP
 
         }
 
-        public HttpHeader GetHeader(string key)
+        public ICollection<HttpHeader> GetHeader(string key)
         {
             var header = this.headers.FirstOrDefault(h => h.Key == key).Value;
 
             CoreValidator.ThrowIfNull(header, nameof(header));
 
-            return header;
+            if (!this.headers.ContainsKey(key))
+            {
+                throw new InvalidOperationException($"The given key {key} is not presented");
+            }
+
+            return this.headers[key];
         }
  
         public override string ToString()
         {
-            return string.Join(Environment.NewLine, this.headers.Select(h=>h.Value.ToString()));
+            var result = new StringBuilder();
+
+            foreach (var header in this.headers)
+            {
+                var headerKey = header.Key;
+
+                foreach (var headerValue in header.Value)
+                {
+                    result.AppendLine($"{headerValue.Key}: {headerValue.Value}");
+                }
+            }
+
+            return result.ToString();
         }
     }
 }
