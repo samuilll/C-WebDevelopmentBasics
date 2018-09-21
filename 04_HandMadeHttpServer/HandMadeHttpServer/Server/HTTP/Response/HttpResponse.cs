@@ -13,11 +13,14 @@ namespace HandMadeHttpServer.Server.HTTP.Response
         protected HttpResponse()
         {
             this.Headers = new HttpHeaderCollection();
+            this.Cookies = new HttpCookieCollection();
         }
 
-        public HttpHeaderCollection Headers { get;protected set; }
+        public IHttpHeaderCollection Headers { get;protected set; }
 
         public HttpStatusCode StatusCode { get;protected set; }
+
+        public IHttpCookieCollection Cookies { get; protected set; }
 
         protected string StatusMessage => this.StatusCode.ToString();
 

@@ -16,9 +16,13 @@ namespace HandMadeHttpServer.Application.Controllers
         {
             return new ViewResponse(HttpStatusCode.OK,new RegisterView());
         }
-        public IHttpResponse RegisterPost(string fisrtName,string middleName, string lastName)
+        public IHttpResponse RegisterPost(string firstName, string middleName, string lastName)
         {
-            return new RedirectResponse($"/user?first-name={fisrtName}&middle-name={middleName}&last-name={lastName}");
+            var response = new RedirectResponse($"/user?first-name={firstName}&middle-name={middleName}&last-name={lastName}");
+            
+            response.Cookies.Add($"{firstName}", $"{firstName}{middleName}{lastName}");
+
+            return response;
         }
 
         public IHttpResponse Details(string fisrtName, string middleName, string lastName)

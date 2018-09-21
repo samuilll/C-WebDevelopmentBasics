@@ -15,6 +15,8 @@ namespace HandMadeHttpServer.Server.HTTP.Response
         {
             this.view = view;
             this.StatusCode = statusCode;
+
+            this.Headers.Add(new HttpHeader(HttpHeader.ContentType,"text/html"));
         }
 
         public override string ToString()

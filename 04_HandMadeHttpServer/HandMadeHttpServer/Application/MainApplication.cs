@@ -12,10 +12,10 @@ namespace HandMadeHttpServer.Application
     {
         public void Start(IAppRouteConfig appRouteConfig)
         {
-            appRouteConfig.AddRoute("/",new GetHandler(httpContext=> new HomeController().Index()));
-            appRouteConfig.AddRoute("/register", new GetHandler(httpContext => new UserController().RegisterGet()));
-            appRouteConfig.AddRoute("/register", new PostHandler(httpContext => new UserController().RegisterPost(httpContext.FormData["first-name"], httpContext.FormData["middle-name"], httpContext.FormData["last-name"])));
-            appRouteConfig.AddRoute("/user", new GetHandler(httpContext => new UserController().Details(httpContext.UrlParameters["first-name"], httpContext.UrlParameters["middle-name"],httpContext.UrlParameters["last-name"])));
+            appRouteConfig.Get("/", req => new HomeController().Index());
+            appRouteConfig.Get("/register", req => new UserController().RegisterGet());
+            appRouteConfig.Post("/register", req => new UserController().RegisterPost(req.FormData["first-name"], req.FormData["middle-name"], req.FormData["last-name"]));
+            appRouteConfig.Get("/user", req => new UserController().Details(req.UrlParameters["first-name"], req.UrlParameters["middle-name"], req.UrlParameters["last-name"]));
         }
     }
 }

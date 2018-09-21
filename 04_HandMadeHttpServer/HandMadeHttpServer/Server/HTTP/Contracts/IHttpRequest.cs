@@ -11,15 +11,19 @@ namespace HandMadeHttpServer.Server.HTTP.Contracts
 
         HttpHeaderCollection HeaderCollection { get; }
 
-        string Path { get; }
+        IHttpCookieCollection Cookies { get; }
+
+        Dictionary<string, string> UrlParameters { get; }
 
         Dictionary<string, string> QueryParameters { get; }
 
         HttpRequestMethod RequestMethod { get; }
 
-        string Url { get; }
+        IHttpSession Session { get; }
 
-        Dictionary<string, string> UrlParameters { get; }
+        string Path { get; }
+
+        string Url { get; }
 
         void AddUrlParameter(string key,string value);
 

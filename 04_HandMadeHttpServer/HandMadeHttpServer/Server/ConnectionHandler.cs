@@ -37,7 +37,6 @@ namespace HandMadeHttpServer.Server
 
                 if (!(httpContext.Request.RequestMethod==HttpRequestMethod.POST && httpContext.Request.FormData.Count==0))
                 {
-
                     var httpResponse = new HttpHandler(this.serverRouteConfig).Handle(httpContext);
 
                     var responseBytes = Encoding.UTF8.GetBytes(httpResponse.ToString());

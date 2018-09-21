@@ -9,6 +9,8 @@ namespace HandMadeHttpServer.Server.HTTP.Contracts
     {
         HttpStatusCode StatusCode { get; }
 
-        HttpHeaderCollection Headers { get; }
+        IHttpHeaderCollection Headers { get; }
+
+        IHttpCookieCollection Cookies { get; }
     }
 }   

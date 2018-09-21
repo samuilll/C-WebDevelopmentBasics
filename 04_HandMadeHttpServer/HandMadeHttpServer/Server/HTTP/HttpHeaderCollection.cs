@@ -6,6 +6,7 @@ namespace HandMadeHttpServer.Server.HTTP
 {
     using Contracts;
     using HandMadeHttpServer.Server.Common;
+    using System.Collections;
     using System.Linq;
 
     public class HttpHeaderCollection : IHttpHeaderCollection
@@ -39,6 +40,7 @@ namespace HandMadeHttpServer.Server.HTTP
 
         }
 
+
         public ICollection<HttpHeader> GetHeader(string key)
         {
             var header = this.headers.FirstOrDefault(h => h.Key == key).Value;
@@ -68,6 +70,17 @@ namespace HandMadeHttpServer.Server.HTTP
             }
 
             return result.ToString();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.headers.Values.GetEnumerator();
+        }
+
+
+        public IEnumerator<ICollection<HttpHeader>> GetEnumerator()
+        {
+            return this.headers.Values.GetEnumerator();
         }
     }
 }

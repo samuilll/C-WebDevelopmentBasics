@@ -7,11 +7,13 @@ namespace HandMadeHttpServer.Server.Routing
     using Contracts;
     using HandMadeHttpServer.Server.Enums;
     using HandMadeHttpServer.Server.Handlers;
+    using HandMadeHttpServer.Server.HTTP.Contracts;
     using System.Linq;
 
     public class AppRouteConfig : IAppRouteConfig
     {
         private readonly Dictionary<HttpRequestMethod, Dictionary<string, RequestHandler>> routes;
+
         public IReadOnlyDictionary<HttpRequestMethod, Dictionary<string, RequestHandler>> Routes => this.routes;
 
         public AppRouteConfig()
@@ -28,26 +30,19 @@ namespace HandMadeHttpServer.Server.Routing
             }
         }
 
-        public void AddRoute(string route, RequestHandler handler)
+        public void Get(string route,Func<IHttpRequest,IHttpResponse> handlingFunc)
         {
-            var handlerName = handler
-                .GetType()
-                .Name
-                .ToLower();
+            this.AddRoute(route, HttpRequestMethod.GET, new RequestHandler(handlingFunc));
+        }
 
-            if (handlerName.Contains("get"))
-            {
-                this.routes[HttpRequestMethod.GET].Add(route, handler);
-            }
-            else if (handlerName.Contains("post"))
-            {
-                this.routes[HttpRequestMethod.POST].Add(route, handler);
-            }
-            else
-            {
-                throw new InvalidOperationException("Invalid handler!");
-            }
+        public void Post(string route, Func<IHttpRequest, IHttpResponse> handlingFunc)
+        {
+            this.AddRoute(route, HttpRequestMethod.POST, new RequestHandler(handlingFunc));
+        }
 
+        public void AddRoute(string route, HttpRequestMethod method,RequestHandler handler)
+        {
+            this.routes[method].Add(route,handler);
         }
     }
 }

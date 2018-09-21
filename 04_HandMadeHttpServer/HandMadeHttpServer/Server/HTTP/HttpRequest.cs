@@ -22,6 +22,7 @@ namespace HandMadeHttpServer.Server.HTTP
             this.QueryParameters = new Dictionary<string, string>();
             this.HeaderCollection = new HttpHeaderCollection();
             this.UrlParameters = new Dictionary<string, string>();
+            this.Cookies = new HttpCookieCollection();
 
             this.ParseRequest(requestString);
         }
@@ -42,6 +43,10 @@ namespace HandMadeHttpServer.Server.HTTP
         public string Url { get; private set; }
 
         public Dictionary<string, string> UrlParameters { get; }
+
+        public IHttpCookieCollection Cookies { get; private set; }
+
+        public IHttpSession Session { get; private set; }
 
         public void AddUrlParameter(string key, string value)
         {
@@ -78,8 +83,48 @@ namespace HandMadeHttpServer.Server.HTTP
                 .Split(new[] { '?', '#' }, StringSplitOptions.RemoveEmptyEntries)[0];
 
             this.ParseHeaders(requestLines);
+            this.ParseCookies();
             this.ParseParameters();
             this.ParseFormData(requestLines.Last());
+
+            this.SetSession();
+        }
+
+        private void SetSession()
+        {
+
+        }
+
+        private void ParseCookies()
+        {
+            if (this.HeaderCollection.ContainsKey(HttpHeader.Cookie))
+            {
+                var allCookies = this.HeaderCollection.GetHeader(HttpHeader.Cookie);
+
+                foreach (var cookie in allCookies)
+                {
+                    var cookieParts = cookie
+                        .Value
+                        .Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
+                        .FirstOrDefault();
+
+                    if (cookieParts == null || !cookieParts.Contains("="))
+                    {
+                        continue;
+                    }
+
+                    var cookieKeyValuePair = cookieParts
+                        .Split(new[] { '=' }, StringSplitOptions.RemoveEmptyEntries);
+
+                    if (cookieKeyValuePair.Length == 2)
+                    {
+                        var key = cookieKeyValuePair[0];
+                        var value = cookieKeyValuePair[1];
+
+                        this.Cookies.Add(new HttpCookie(key, value,false));
+                    }
+                }
+            }
         }
 
         private void ParseHeaders(string[] requestLines)
@@ -104,7 +149,7 @@ namespace HandMadeHttpServer.Server.HTTP
                 this.HeaderCollection.Add(header);
             }
 
-            if (!this.HeaderCollection.ContainsKey("Host"))
+            if (!this.HeaderCollection.ContainsKey(HttpHeader.Host))
             {
                 throw new BadRequestException(BadRequestMessage);
             }
