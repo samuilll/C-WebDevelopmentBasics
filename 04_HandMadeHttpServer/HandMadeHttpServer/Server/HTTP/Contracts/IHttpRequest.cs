@@ -19,7 +19,7 @@ namespace HandMadeHttpServer.Server.HTTP.Contracts
 
         HttpRequestMethod RequestMethod { get; }
 
-        IHttpSession Session { get; }
+        IHttpSession Session { get; set; }
 
         string Path { get; }
 

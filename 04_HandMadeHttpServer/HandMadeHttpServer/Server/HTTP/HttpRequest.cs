@@ -46,7 +46,7 @@ namespace HandMadeHttpServer.Server.HTTP
 
         public IHttpCookieCollection Cookies { get; private set; }
 
-        public IHttpSession Session { get; private set; }
+        public IHttpSession Session { get;  set; }
 
         public void AddUrlParameter(string key, string value)
         {
@@ -92,41 +92,56 @@ namespace HandMadeHttpServer.Server.HTTP
 
         private void SetSession()
         {
+            var sessionCookieKey = SessionStore.sessionCookieKey;
 
-        }
+            if (this.Cookies.ContainsKey(sessionCookieKey))
+            {
+                var cookie = this.Cookies.GetCookie(sessionCookieKey);
+                var sessionId = cookie.Value;
 
-        private void ParseCookies()
+                this.Session = SessionStore.Get(sessionId);
+            }
+    }
+
+    private void ParseCookies()
         {
             if (this.HeaderCollection.ContainsKey(HttpHeader.Cookie))
             {
-                var allCookies = this.HeaderCollection.GetHeader(HttpHeader.Cookie);
+                var allCookies = this.HeaderCollection.Get(HttpHeader.Cookie);
 
                 foreach (var cookie in allCookies)
                 {
+                    if (!cookie.Value.Contains('='))
+                    {
+                        return;
+                    }
+
                     var cookieParts = cookie
                         .Value
-                        .Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
-                        .FirstOrDefault();
+                        .Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries)
+                        .ToList();
 
-                    if (cookieParts == null || !cookieParts.Contains("="))
+                    if (!cookieParts.Any())
                     {
                         continue;
                     }
 
-                    var cookieKeyValuePair = cookieParts
-                        .Split(new[] { '=' }, StringSplitOptions.RemoveEmptyEntries);
-
-                    if (cookieKeyValuePair.Length == 2)
+                    foreach (var cookiePart in cookieParts)
                     {
-                        var key = cookieKeyValuePair[0];
-                        var value = cookieKeyValuePair[1];
+                        var cookieKeyValuePair = cookiePart
+                            .Split(new[] { '=' }, StringSplitOptions.RemoveEmptyEntries);
 
-                        this.Cookies.Add(new HttpCookie(key, value,false));
+                        if (cookieKeyValuePair.Length == 2)
+                        {
+                            var key = cookieKeyValuePair[0].Trim();
+                            var value = cookieKeyValuePair[1].Trim();
+
+                            this.Cookies.Add(new HttpCookie(key, value, false));
+                        }
                     }
                 }
             }
         }
-
         private void ParseHeaders(string[] requestLines)
         {
             int endIndex = Array.IndexOf(requestLines, string.Empty);

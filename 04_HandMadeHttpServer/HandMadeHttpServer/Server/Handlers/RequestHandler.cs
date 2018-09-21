@@ -22,17 +22,34 @@ namespace HandMadeHttpServer.Server.Handlers
         }
         public IHttpResponse Handle(IHttpContext httpContext)
         {
+            string sessionIdToSend = null;
+
+            if (!httpContext.Request.Cookies.ContainsKey(SessionStore.sessionCookieKey))
+            {
+                var sessionId = Guid.NewGuid().ToString();
+
+                httpContext.Request.Session = SessionStore.Get(sessionId);
+
+                sessionIdToSend = sessionId;
+            }
+
             var response = this.handlingFunc(httpContext.Request);
 
-           // response.Headers.Add(new HttpHeader("Content-Type","text/html"));
+            if (sessionIdToSend != null)
+            {
+                response.Headers.Add(
+                    HttpHeader.SetCookie,
+                    $"{SessionStore.sessionCookieKey}={sessionIdToSend}; HttpOnly; path=/");
+            }
+
             if (!response.Headers.ContainsKey(HttpHeader.ContentType))
             {
-                response.Headers.Add(new HttpHeader("Content-Type", "text/html"));
+                response.Headers.Add(HttpHeader.ContentType, "text/plain");
             }
 
             foreach (var cookie in response.Cookies)
             {
-                response.Headers.Add(new HttpHeader(HttpHeader.SetCookie, cookie.ToString()));
+                response.Headers.Add(HttpHeader.SetCookie, cookie.ToString());
             }
 
             return response;

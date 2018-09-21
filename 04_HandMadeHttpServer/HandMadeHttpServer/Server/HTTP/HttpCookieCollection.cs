@@ -33,7 +33,7 @@ namespace HandMadeHttpServer.Server.HTTP
             return this.cookies.ContainsKey(key);
         }
 
-        public HttpCookie GetHeader(string key)
+        public HttpCookie GetCookie(string key)
         {
             var cookie = this.cookies.FirstOrDefault(h => h.Key == key).Value;
 

@@ -20,10 +20,10 @@ namespace HandMadeHttpServer.Server.HTTP
 
         public string Id { get; private set; }
 
-        public void Add(string key, string value)
+        public void Add(string key, object value)
         {
             CoreValidator.ThrowIfNullOrEmpty(key, nameof(key));
-            CoreValidator.ThrowIfNullOrEmpty(value, nameof(value));
+            CoreValidator.ThrowIfNullOrEmpty(value.ToString(), nameof(value));
 
             this.values[key] = value;
 
@@ -40,11 +40,14 @@ namespace HandMadeHttpServer.Server.HTTP
 
             if (!this.values.ContainsKey(key))
             {
-                throw new InvalidOperationException($"The given key {key} is not presented");
+                return null;
             }
 
             return this.values[key];
         }
+
+        public T Get<T>(string key)
+        => (T)this.Get(key);
 
         public bool IsAuthenticated()
         {

@@ -16,6 +16,9 @@ namespace HandMadeHttpServer.Application
             appRouteConfig.Get("/register", req => new UserController().RegisterGet());
             appRouteConfig.Post("/register", req => new UserController().RegisterPost(req.FormData["first-name"], req.FormData["middle-name"], req.FormData["last-name"]));
             appRouteConfig.Get("/user", req => new UserController().Details(req.UrlParameters["first-name"], req.UrlParameters["middle-name"], req.UrlParameters["last-name"]));
+            appRouteConfig.Get(
+                            "/testsession",
+                            req => new HomeController().SessionTest(req));
         }
     }
 }

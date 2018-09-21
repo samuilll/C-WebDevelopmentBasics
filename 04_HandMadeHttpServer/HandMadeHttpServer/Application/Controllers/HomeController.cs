@@ -14,5 +14,21 @@ namespace HandMadeHttpServer.Application.Controllers
         {
           return  new ViewResponse(HttpStatusCode.OK,new HomeIndexView());
         }
+
+        public IHttpResponse SessionTest(IHttpRequest req)
+        {
+            var session = req.Session;
+
+            const string sessionDateKey = "saved_date";
+
+            if (session.Get(sessionDateKey) == null)
+            {
+                session.Add(sessionDateKey, DateTime.UtcNow);
+            }
+
+            return new ViewResponse(
+                HttpStatusCode.OK,
+                new SessionTestView(session.Get<DateTime>(sessionDateKey)));
+        }
     }
 }

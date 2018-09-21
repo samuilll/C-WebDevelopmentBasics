@@ -10,10 +10,12 @@ namespace HandMadeHttpServer.Server.HTTP.Contracts
 
         object Get(string key);
 
-        void Add(string key, string value);
+        void Add(string key, object value);
 
         void Clear();
 
         bool IsAuthenticated();
+
+        T Get<T>(string key);
     }
 }

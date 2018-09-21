@@ -13,6 +13,6 @@ namespace HandMadeHttpServer.Server.HTTP.Contracts
 
         void Add(string key, string value);
 
-        HttpCookie GetHeader(string key);
+        HttpCookie GetCookie(string key);
     }
 }

@@ -32,6 +32,22 @@ namespace HandMadeHttpServer.Server.HTTP
             this.headers[headerKey].Add(header);
         }
 
+        public void Add(string key, string value)
+        {
+            CoreValidator.ThrowIfNull(key, nameof(key));
+
+            CoreValidator.ThrowIfNull(value, nameof(value));
+
+            var header = new HttpHeader(key, value);
+
+            if (!this.headers.ContainsKey(header.Key))
+            {
+                this.headers[header.Key] = new List<HttpHeader>();
+            }
+
+            this.headers[header.Key].Add(header);
+        }
+
         public bool ContainsKey(string key)
         {
             CoreValidator.ThrowIfNull(key, nameof(key));
@@ -41,7 +57,7 @@ namespace HandMadeHttpServer.Server.HTTP
         }
 
 
-        public ICollection<HttpHeader> GetHeader(string key)
+        public ICollection<HttpHeader> Get(string key)
         {
             var header = this.headers.FirstOrDefault(h => h.Key == key).Value;
 
