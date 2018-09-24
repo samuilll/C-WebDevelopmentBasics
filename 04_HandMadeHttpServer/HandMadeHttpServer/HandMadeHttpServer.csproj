@@ -9,4 +9,9 @@
     <PackageReference Include="Microsoft.IdentityModel" Version="6.1.7600.16394" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ByTheCakeApplication\Resourses\Styles\" />
+    <Folder Include="ByTheCakeApplication\Views\Home\" />
+  </ItemGroup>
+
 </Project>
