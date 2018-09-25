@@ -7,6 +7,7 @@ using System.Text;
 using HandMadeHttpServer.Server.HTTP.Response;
 using HandMadeHttpServer.Server.Handlers;
 using HandMadeHttpServer.ByTheCakeApplication.Controllers.Home;
+using HandMadeHttpServer.ByTheCakeApplication.Controllers;
 
 namespace HandMadeHttpServer.ByTheCakeApplication
 {
@@ -22,7 +23,17 @@ namespace HandMadeHttpServer.ByTheCakeApplication
 
             appRouteConfig.Post("/add", req => new CakeController().Add(req.FormData["name"],req.FormData["price"]));
 
-            appRouteConfig.Get("/search", req => new CakeController().Search(req.UrlParameters));
+            appRouteConfig.Get("/search", req => new CakeController().Search(req));
+
+            appRouteConfig.Get("/login", req => new AccountController().Login());
+
+            appRouteConfig.Post("/login", req => new AccountController().Login(req));
+
+            appRouteConfig
+                .Get(
+                "/shopping/add/{(?<id>[0-9]+)}",
+                req => new ShoppingController().AddToCart(req)
+                );
 
         }
     }

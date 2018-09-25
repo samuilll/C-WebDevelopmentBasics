@@ -12,6 +12,14 @@ namespace HandMadeHttpServer.Infrastructure
 {
    public abstract class Controller
     {
+
+        protected IDictionary<string, string> ViewData { get; set; }
+
+        protected Controller()
+        {
+            ViewData = new Dictionary<string,string>();
+        }
+
         public const string DefaultPath = "ByTheCakeApplication/Resourses/{0}.html";
 
         public const string ContentPlaceholder = "{{{content}}}";
@@ -20,16 +28,9 @@ namespace HandMadeHttpServer.Infrastructure
         {
             string result = ProcessFileHtml(fileName);
 
-            return new ViewResponse(HttpStatusCode.OK, new FileView(result));
-        }
-
-        public IHttpResponse FileViewResponse(string fileName,Dictionary<string,string> values)
-        {
-            string result = ProcessFileHtml(fileName);
-
-            if (values != null && values.Any())
+            if (this.ViewData.Any())
             {
-                foreach (var value in values)
+                foreach (var value in this.ViewData)
                 {
                     result = result.Replace($"{{{{{{{value.Key}}}}}}}", value.Value);
                 }

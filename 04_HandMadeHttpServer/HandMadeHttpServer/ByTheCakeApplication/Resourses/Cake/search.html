@@ -1,9 +1,12 @@
 ﻿<a href="/">Back to home</a>
 <form action="/search" method="get">
-    <input type="text" name="searchTerm"/>
+    <input type="text" name="searchTerm" placeholder="{{{searchTerm}}}"/>
     <input type="submit" name="operation" value="Search" />
 </form>
+<div style="display: {{{showCart}}}">
+    Your Cart: {{{products}}}
+</div>
 
-<div style="display: {{{showResult}}}">
-{{{content}}}
+<div style="display: {{{showCakes}}}">
+{{{cakes}}}
 </div>

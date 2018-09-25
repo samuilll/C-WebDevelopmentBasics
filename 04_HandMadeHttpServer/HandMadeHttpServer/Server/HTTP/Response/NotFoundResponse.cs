@@ -5,9 +5,13 @@ using System.Text;
 namespace HandMadeHttpServer.Server.HTTP.Response
 {
     using Contracts;
-  public  class NotFoundResponse:HttpResponse
+    using Common;
+    using HandMadeHttpServer.Server.Enums;
+
+    public  class NotFoundResponse:ViewResponse
     {
-        public NotFoundResponse():base()
+        public NotFoundResponse()
+            :base(HttpStatusCode.NotFound,new NotFoundView())
         {
             this.StatusCode = Enums.HttpStatusCode.NotFound;
         }

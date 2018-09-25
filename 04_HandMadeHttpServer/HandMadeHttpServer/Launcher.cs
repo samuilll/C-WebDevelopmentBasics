@@ -19,7 +19,7 @@ namespace HandMadeHttpServer
 
         public void Run()
         {
-            IApplication app = new MainApplication();
+            IApplication app = new CakeApplication();
             IAppRouteConfig routeConfig = new AppRouteConfig();
             app.Start(routeConfig);
 

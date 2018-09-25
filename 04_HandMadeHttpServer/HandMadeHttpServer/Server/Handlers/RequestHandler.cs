@@ -24,7 +24,7 @@ namespace HandMadeHttpServer.Server.Handlers
         {
             string sessionIdToSend = null;
 
-            if (!httpContext.Request.Cookies.ContainsKey(SessionStore.sessionCookieKey))
+            if (!httpContext.Request.Cookies.ContainsKey(SessionStore.SessionCookieKey))
             {
                 var sessionId = Guid.NewGuid().ToString();
 
@@ -33,13 +33,13 @@ namespace HandMadeHttpServer.Server.Handlers
                 sessionIdToSend = sessionId;
             }
 
-            var response = this.handlingFunc(httpContext.Request);
+            var response = handlingFunc(httpContext.Request);
 
             if (sessionIdToSend != null)
             {
                 response.Headers.Add(
                     HttpHeader.SetCookie,
-                    $"{SessionStore.sessionCookieKey}={sessionIdToSend}; HttpOnly; path=/");
+                    $"{SessionStore.SessionCookieKey}={sessionIdToSend}; HttpOnly; path=/");
             }
 
             if (!response.Headers.ContainsKey(HttpHeader.ContentType))

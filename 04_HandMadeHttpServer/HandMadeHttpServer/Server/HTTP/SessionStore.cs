@@ -8,7 +8,9 @@ namespace HandMadeHttpServer.Server.HTTP
 
    public static class SessionStore
     {
-        public  const string sessionCookieKey = "SID";
+        public  const string SessionCookieKey = "SID";
+        public const string CurrentUserKey = "^%Current_User_Session_Key%^";
+        public const string ShoppingCardKey = "^%Current_Shopping_Cart^%";
 
         private static readonly ConcurrentDictionary<string, HttpSession> sessions =
             new ConcurrentDictionary<string, HttpSession>();

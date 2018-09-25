@@ -92,7 +92,7 @@ namespace HandMadeHttpServer.Server.HTTP
 
         private void SetSession()
         {
-            var sessionCookieKey = SessionStore.sessionCookieKey;
+            var sessionCookieKey = SessionStore.SessionCookieKey;
 
             if (this.Cookies.ContainsKey(sessionCookieKey))
             {

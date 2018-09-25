@@ -6,8 +6,11 @@ namespace HandMadeHttpServer.ByTheCakeApplication.Models
 {
    public class Cake
     {
-        public Cake(string name, decimal price)
+        public int Id { get; set; }
+
+        public Cake(int id,string name, decimal price)
         {
+            this.Id = id;
             this.Name = name;
             this.Price = price;
         }
@@ -18,7 +21,7 @@ namespace HandMadeHttpServer.ByTheCakeApplication.Models
 
         public override string ToString()
         {
-            return $"{this.Name},{this.Price}";
+            return $"{this.Name} ${this.Price}";
         }
     }
 }

@@ -9,6 +9,7 @@ namespace HandMadeHttpServer.Server.Handlers
     using Server.HTTP.Contracts;
     using System.Text.RegularExpressions;
     using HandMadeHttpServer.Server.HTTP.Response;
+    using HandMadeHttpServer.Server.HTTP;
 
     public class HttpHandler : IRequestHandler
     {
@@ -19,30 +20,44 @@ namespace HandMadeHttpServer.Server.Handlers
             this.serverRouteConfig = serverRouteConfig;
         }
 
-        public IHttpResponse Handle(IHttpContext httpContext)
+        public IHttpResponse Handle(IHttpContext context)
         {
-            var method = httpContext.Request.RequestMethod;
-
-            var routes = this.serverRouteConfig.Routes[method];
-
-            foreach (var kvp in routes)
+            try
             {
-                string pattern = kvp.Key;
-                var routingContext = kvp.Value;
-                Regex regex = new Regex(pattern);
-                Match match = regex.Match(httpContext.Request.Path);
+                var currentPath = context.Request.Path;
+                var loginPath = "/login";
 
-                if (!match.Success)
+                if (currentPath != loginPath && !context.Request.Session.Contains(SessionStore.CurrentUserKey))
                 {
-                    continue;
+                    return new RedirectResponse(loginPath);
                 }
 
-                foreach (var parameter in routingContext.Parameters)
-                {
-                    httpContext.Request.AddUrlParameter(parameter, match.Groups[parameter].Value);
-                }
+                var method = context.Request.RequestMethod;
+                var registeredRoutes = this.serverRouteConfig.Routes[method];
 
-                return kvp.Value.RequestHandler.Handle(httpContext);
+                foreach (var registeredRoute in registeredRoutes)
+                {
+                    string pattern = registeredRoute.Key;
+                    var routingContext = registeredRoute.Value;
+                    Regex regex = new Regex(pattern);
+                    Match match = regex.Match(context.Request.Path);
+
+                    if (!match.Success)
+                    {
+                        continue;
+                    }
+
+                    foreach (var parameter in routingContext.Parameters)
+                    {
+                        context.Request.AddUrlParameter(parameter, match.Groups[parameter].Value);
+                    }
+
+                    return registeredRoute.Value.RequestHandler.Handle(context);
+                }
+            }
+            catch (Exception ex)
+            {
+                return new InternalServerErrorResponse(ex);
             }
 
             return new NotFoundResponse();

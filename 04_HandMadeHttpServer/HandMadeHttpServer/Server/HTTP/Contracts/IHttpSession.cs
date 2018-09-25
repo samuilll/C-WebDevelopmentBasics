@@ -14,6 +14,8 @@ namespace HandMadeHttpServer.Server.HTTP.Contracts
 
         void Clear();
 
+        bool Contains(string key);
+
         bool IsAuthenticated();
 
         T Get<T>(string key);
