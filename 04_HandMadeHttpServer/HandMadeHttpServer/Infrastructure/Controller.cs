@@ -18,6 +18,13 @@ namespace HandMadeHttpServer.Infrastructure
         protected Controller()
         {
             ViewData = new Dictionary<string,string>();
+
+            this.ViewData["isAuthenticated"] = "block";
+        }
+
+        public virtual void SetUserName(string name)
+        {
+            this.ViewData["username"] = name;
         }
 
         public const string DefaultPath = "ByTheCakeApplication/Resourses/{0}.html";

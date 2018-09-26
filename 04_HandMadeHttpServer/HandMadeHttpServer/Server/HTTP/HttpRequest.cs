@@ -48,6 +48,8 @@ namespace HandMadeHttpServer.Server.HTTP
 
         public IHttpSession Session { get;  set; }
 
+        public string Username { get; }
+
         public void AddUrlParameter(string key, string value)
         {
             CoreValidator.ThrowIfNullOrEmpty(key, nameof(key));

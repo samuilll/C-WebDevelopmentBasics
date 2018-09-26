@@ -1,0 +1,13 @@
+﻿body {
+}
+.heavy {
+    border:solid red;
+    text-align:center;
+    color: blue;
+    margin:100px;
+    padding:10px;
+}
+.outer {
+    border: solid blue;
+    padding:1px;
+}

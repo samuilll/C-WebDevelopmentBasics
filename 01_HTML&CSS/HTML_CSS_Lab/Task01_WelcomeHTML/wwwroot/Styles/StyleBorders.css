@@ -1,0 +1,34 @@
+﻿body {
+}
+
+#first{
+    border: solid red;
+    text-align: center;
+    border-radius: 10px;
+    background: lightgray;
+}
+#second {
+    border: solid green;
+    text-align: center;
+    border-radius: 10px;
+    background: lightgray;
+}
+#third {
+    border: solid blue;
+    text-align: center;
+    border-radius: 10px;
+    background: lightgray;
+}
+
+#blue {
+    color: blue;
+}
+
+#red {
+    color: red;
+}
+
+#green {
+    color: green;
+}
+

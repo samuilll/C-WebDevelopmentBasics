@@ -1,0 +1,16 @@
+.outside {
+    margin: 2px;
+    border: 3px dotted blue;
+    border-radius: 15px
+}
+.middle{
+    margin: 2px;
+    border: 3px dashed red;
+    border-radius: 15px;
+}
+.inner {
+    font-size: 30px;
+    margin: 2px;
+    border: 3px solid green;
+    text-align: center;
+}

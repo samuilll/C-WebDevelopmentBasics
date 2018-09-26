@@ -35,6 +35,11 @@ namespace HandMadeHttpServer.ByTheCakeApplication
                 req => new ShoppingController().AddToCart(req)
                 );
 
+            appRouteConfig.Get("/cart", req => new ShoppingController().ShowCart(req));
+
+            appRouteConfig.Get("/success", req => new ShoppingController().Success(req));
+
+            appRouteConfig.Get("/logout", req => new AccountController().Logout(req));
         }
     }
 }

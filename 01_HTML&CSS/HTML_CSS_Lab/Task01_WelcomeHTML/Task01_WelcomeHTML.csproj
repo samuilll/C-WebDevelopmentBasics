@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="headings.html" />
+    <None Remove="hello.html" />
+    <None Remove="paragraphs.html" />
+    <None Remove="todo.html" />
+    <None Remove="welcome.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="headings.html" />
+    <Content Include="home.html" />
+    <Content Include="paragraphs.html" />
+    <Content Include="welcome.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Styles\LanguagesStyle.css" />
+    <None Include="wwwroot\Styles\RectanglesStyle.css" />
+    <None Include="wwwroot\Styles\StyleColors.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.9" />
+  </ItemGroup>
+
+</Project>

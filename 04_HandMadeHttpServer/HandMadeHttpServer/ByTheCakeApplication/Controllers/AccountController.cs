@@ -12,9 +12,11 @@ namespace HandMadeHttpServer.ByTheCakeApplication.Controllers
   public  class AccountController:Controller
     {
 
+
         public IHttpResponse Login()
         {
             this.ViewData["showError"] = "none";
+            this.ViewData["isAuthenticated"] = "none";
 
             return this.FileViewResponse("Account/login");
         }
@@ -46,6 +48,13 @@ namespace HandMadeHttpServer.ByTheCakeApplication.Controllers
             req.Session.Add(SessionStore.CurrentUserKey, name);
             req.Session.Add(SessionStore.ShoppingCardKey, new ShoppingCard());
             return new RedirectResponse("/");
+        }
+
+        internal IHttpResponse Logout(IHttpRequest req)
+        {
+            req.Session.Clear();
+
+            return new RedirectResponse("/login");
         }
     }
 }

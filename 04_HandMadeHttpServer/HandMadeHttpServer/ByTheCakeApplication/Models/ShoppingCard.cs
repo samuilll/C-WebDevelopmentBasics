@@ -6,11 +6,29 @@ namespace HandMadeHttpServer.ByTheCakeApplication.Models
 {
    public class ShoppingCard
     {
-        public List<Cake> Orders { get; private set; } = new List<Cake>();
+        private List<Cake> orders;
+
+        public IReadOnlyList<Cake> Orders
+        {
+            get
+            {
+                return (IReadOnlyList<Cake>)this.orders;
+            }
+        } 
 
         public ShoppingCard()
         {
-            this.Orders = new List<Cake>();
+            this.orders = new List<Cake>();
+        }
+
+        public void Add(Cake cake)
+        {
+            this.orders.Add(cake);
+        }
+
+        public void Clear()
+        {
+            this.orders.Clear();
         }
     }
 }
