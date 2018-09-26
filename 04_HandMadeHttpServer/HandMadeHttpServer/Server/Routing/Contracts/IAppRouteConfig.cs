@@ -18,6 +18,11 @@ namespace HandMadeHttpServer.Server.Routing.Contracts
 
         void Post(string route, Func<IHttpRequest, IHttpResponse> handlingFunc);
 
-        void AddRoute(string route, HttpRequestMethod method, RequestHandler handler); 
+        IReadOnlyList<string> AnonymousPaths { get; }
+
+        void AddRoute(string route, HttpRequestMethod method, RequestHandler handler);
+
+        void AddAnonymousPath(string path);
+
     }
 }

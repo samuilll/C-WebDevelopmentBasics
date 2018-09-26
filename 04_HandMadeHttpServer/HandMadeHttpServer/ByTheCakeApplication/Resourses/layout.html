@@ -13,7 +13,10 @@
 <body>
     <div style="display:{{{isAuthenticated}}}">
         Hello, {{{username}}}
-        <a style="text-align: left" href="/logout">Logout</a>
+        <a style="text-align: left" href="/logout">
+            <input type="button" name="logout" value="Logout" />
+        </a>
+      
     </div>
     {{{content}}}
     <hr />

@@ -8,20 +8,58 @@ using HandMadeHttpServer.Server.HTTP.Response;
 using HandMadeHttpServer.Server.Handlers;
 using HandMadeHttpServer.ByTheCakeApplication.Controllers.Home;
 using HandMadeHttpServer.ByTheCakeApplication.Controllers;
+using Microsoft.EntityFrameworkCore;
 
 namespace HandMadeHttpServer.ByTheCakeApplication
 {
+    using ViewModels;
+
     public class CakeApplication : IApplication
     {
-        public void Start(IAppRouteConfig appRouteConfig)
+
+        public void InitializeDatabase()
         {
+            using (var db = new ShoppingDbContext())
+            {
+                db.Database.Migrate();
+            }
+        }
+        public void Configure(IAppRouteConfig appRouteConfig)
+        {
+            appRouteConfig
+                .AddAnonymousPath("/");
+
+            appRouteConfig
+                .AddAnonymousPath("/login");
+
+            appRouteConfig
+                .AddAnonymousPath("/register");
+
+            appRouteConfig
+                .AddAnonymousPath("/successfulReg");
+
             appRouteConfig.Get("/",req=>new HomeController().Index());
 
-            appRouteConfig.Get("/about", req => new HomeController().About());
+            appRouteConfig
+                .Get(
+                "/about",
+                 req => new HomeController().About()
+                );
 
-            appRouteConfig.Get("/add",req=>new CakeController().Add());
+            appRouteConfig
+                .Get(
+                "/add",
+                req=>new CakeController().Add()
+                );
 
-            appRouteConfig.Post("/add", req => new CakeController().Add(req.FormData["name"],req.FormData["price"]));
+            appRouteConfig
+                .Post(
+                "/add",
+                req => new CakeController()
+                .Add(
+                    req.FormData["name"],
+                    req.FormData["price"]
+                    ));
 
             appRouteConfig.Get("/search", req => new CakeController().Search(req));
 
@@ -40,6 +78,18 @@ namespace HandMadeHttpServer.ByTheCakeApplication
             appRouteConfig.Get("/success", req => new ShoppingController().Success(req));
 
             appRouteConfig.Get("/logout", req => new AccountController().Logout(req));
+
+            appRouteConfig.Get("/register", req => new AccountController().Register());
+
+            appRouteConfig
+                .Post(
+                "/register",
+                req => new AccountController().Register(new RegisterUserViewModel()
+                { 
+                     Username = req.FormData["username"],
+                     Password = req.FormData["password"],
+                     ConfirmPassword = req.FormData["passwordConfirmed"]
+                }));
         }
     }
 }

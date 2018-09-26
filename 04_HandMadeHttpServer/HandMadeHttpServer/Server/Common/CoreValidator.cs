@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace HandMadeHttpServer.Server.Common
@@ -14,6 +15,16 @@ namespace HandMadeHttpServer.Server.Common
             }
         }
 
+        public static void ValidateObject(object entity)
+        {
+            var validationContext = new ValidationContext(entity);
+
+            Validator.ValidateObject(
+                entity,
+                validationContext,
+                validateAllProperties: true);
+        }
+
         public static void ThrowIfNullOrEmpty(string text, string name)
         {
             if (string.IsNullOrEmpty(text))
@@ -23,3 +34,4 @@ namespace HandMadeHttpServer.Server.Common
         }
     }
 }
+

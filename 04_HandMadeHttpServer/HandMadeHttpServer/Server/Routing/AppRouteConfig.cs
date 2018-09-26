@@ -12,10 +12,21 @@ namespace HandMadeHttpServer.Server.Routing
 
     public class AppRouteConfig : IAppRouteConfig
     {
+
         private readonly Dictionary<HttpRequestMethod, Dictionary<string, RequestHandler>> routes;
 
         public IReadOnlyDictionary<HttpRequestMethod, Dictionary<string, RequestHandler>> Routes => this.routes;
 
+        private List<string> anonymousPaths =  new List<string>();
+
+        public IReadOnlyList<string> AnonymousPaths
+        {
+            get
+            {
+                return this.anonymousPaths.AsReadOnly();
+            }
+
+        }
         public AppRouteConfig()
         {
             this.routes = new Dictionary<HttpRequestMethod, Dictionary<string, RequestHandler>>();
@@ -43,6 +54,11 @@ namespace HandMadeHttpServer.Server.Routing
         public void AddRoute(string route, HttpRequestMethod method,RequestHandler handler)
         {
             this.routes[method].Add(route,handler);
+        }
+
+        public void AddAnonymousPath(string path)
+        {
+            this.anonymousPaths.Add(path);
         }
     }
 }

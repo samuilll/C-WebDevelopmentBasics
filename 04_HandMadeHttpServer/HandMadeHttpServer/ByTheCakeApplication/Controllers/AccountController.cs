@@ -1,22 +1,28 @@
-﻿using HandMadeHttpServer.ByTheCakeApplication.Models;
-using HandMadeHttpServer.Infrastructure;
+﻿using HandMadeHttpServer.Infrastructure;
 using HandMadeHttpServer.Server.HTTP;
 using HandMadeHttpServer.Server.HTTP.Contracts;
 using HandMadeHttpServer.Server.HTTP.Response;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace HandMadeHttpServer.ByTheCakeApplication.Controllers
 {
-  public  class AccountController:Controller
+    using ByTheCakeApplication.Models;
+    using ByTheCakeApplication.ViewModels;
+    using ByTheCakeApplication.Services;
+    using Services.Contracts;
+    using System;
+
+    public  class AccountController:Controller
     {
+        private IUserService userService;
 
-
+        public AccountController()
+        {
+            this.userService = new UserService();
+        }
         public IHttpResponse Login()
         {
-            this.ViewData["showError"] = "none";
-            this.ViewData["isAuthenticated"] = "none";
+            SetAnonimoysView();
+            SetWithoutErrorView();
 
             return this.FileViewResponse("Account/login");
         }
@@ -55,6 +61,61 @@ namespace HandMadeHttpServer.ByTheCakeApplication.Controllers
             req.Session.Clear();
 
             return new RedirectResponse("/login");
+        }
+
+        internal IHttpResponse Register()
+        {
+            SetAnonimoysView();
+            SetWithoutErrorView();
+
+            return this.FileViewResponse("Account/register");
+        }
+
+        internal IHttpResponse Register(RegisterUserViewModel model)
+        {
+            var username = model.Username;
+            var password = model.Password;
+            var confirmPassword = model.ConfirmPassword;
+
+            if (username.Length<3
+                || password.Length<3
+                || confirmPassword != password)
+            {
+
+                this.ViewData["showError"] = "block";
+                this.ViewData["error"] = "Invalid user parameters!";
+
+                return this.FileViewResponse("Account/register");
+            }
+
+            var success = this.userService.Create(username, password);
+
+            if (success)
+            {
+                this.ViewData["new-user"] = username;
+
+                return this.FileViewResponse("Account/successfulReg");
+            }
+
+            else
+            {
+                this.ViewData["showError"] = "block";
+                this.ViewData["error"] = "This username is taken";
+
+                return this.FileViewResponse("Account/register");
+
+            }
+        }
+
+
+        private void SetWithoutErrorView()
+        {
+            this.ViewData["showError"] = "none";
+        }
+
+        private void SetAnonimoysView()
+        {
+            this.ViewData["isAuthenticated"] = "none";
         }
     }
 }

@@ -14,9 +14,13 @@ namespace HandMadeHttpServer.Server.Routing
     {
         private readonly IDictionary<HttpRequestMethod, IDictionary<string, IRoutingContext>> routes;
 
+        public  IAppRouteConfig AppRouteConfig { get;}
+
         public ServerRouteConfig(IAppRouteConfig appRouteConfig)
         {
             this.routes = new Dictionary<HttpRequestMethod, IDictionary<string, IRoutingContext>>();
+
+            this.AppRouteConfig = appRouteConfig;
 
             var availableMethods = Enum
               .GetValues(typeof(HttpRequestMethod))

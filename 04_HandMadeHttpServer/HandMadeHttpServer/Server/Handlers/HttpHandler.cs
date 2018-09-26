@@ -10,6 +10,7 @@ namespace HandMadeHttpServer.Server.Handlers
     using System.Text.RegularExpressions;
     using HandMadeHttpServer.Server.HTTP.Response;
     using HandMadeHttpServer.Server.HTTP;
+    using System.Linq;
 
     public class HttpHandler : IRequestHandler
     {
@@ -25,9 +26,13 @@ namespace HandMadeHttpServer.Server.Handlers
             try
             {
                 var currentPath = context.Request.Path;
+
                 var loginPath = "/login";
 
-                if (currentPath != loginPath && !context.Request.Session.Contains(SessionStore.CurrentUserKey))
+                var anonymousPaths = this.serverRouteConfig.AppRouteConfig.AnonymousPaths.ToList();
+
+
+                if (!anonymousPaths.Contains(currentPath) && !context.Request.Session.Contains(SessionStore.CurrentUserKey))
                 {
                     return new RedirectResponse(loginPath);
                 }

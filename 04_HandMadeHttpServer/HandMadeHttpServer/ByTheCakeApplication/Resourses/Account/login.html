@@ -4,11 +4,14 @@
     <input id="name" type="text" name="name" />
     <br />
     <label  for="pass">Password:</label>
-    <input id="pass" type="text" min="0" name="password" />
+    <input id="pass" type="password" min="0" name="password" />
     <br/>
     <input type="submit" name="login" value="Login" />
 </form>
 
+<div>
+    Don't have an account? <a href="/register">Register</a>
+</div>
 <div style="display: {{{showError}}}; color:red" >
     {{{error}}}
 </div>

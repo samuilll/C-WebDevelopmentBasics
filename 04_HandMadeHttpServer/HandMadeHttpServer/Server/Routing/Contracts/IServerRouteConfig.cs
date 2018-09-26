@@ -8,5 +8,7 @@ namespace HandMadeHttpServer.Server.Routing.Contracts
    public interface IServerRouteConfig
     {
         IDictionary<HttpRequestMethod, IDictionary<string, IRoutingContext>> Routes { get; }
+
+        IAppRouteConfig AppRouteConfig { get; }
     }
 }

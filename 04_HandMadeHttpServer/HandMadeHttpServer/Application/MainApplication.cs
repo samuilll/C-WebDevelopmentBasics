@@ -10,7 +10,7 @@ namespace HandMadeHttpServer.Application
 {
     class MainApplication : IApplication
     {
-        public void Start(IAppRouteConfig appRouteConfig)
+        public void Configure(IAppRouteConfig appRouteConfig)
         {
             appRouteConfig.Get("/", req => new HomeController().Index());
             appRouteConfig.Get("/register", req => new UserController().RegisterGet());
