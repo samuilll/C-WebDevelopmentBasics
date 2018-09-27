@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <a href="/">Back to home</a>
+    <form action="/add" method="post">
+        Name:
+        <input type="text" name="name" />
+        <br />
+        Price:
+        <input type="number" min="0.0" name="price" />
+        <br />
+        Picture Url:
+        <input type="text"  name="url" />
+        <input type="submit" name="Add Product" value="Add Product" />
+    </form>
+</body>
+</html>
+<div style="display: {{{show-result}}}">
+    name: {{{name}}}
+    <br/>
+    price: {{{price}}}
+    <br/>
+    <img height="50" width="50" src="{{{url}}}" alt="Alternate Text" />
+</div>
+<div style="display: {{{show-error}}}; color:red">
+    {{{error}}}
+</div>

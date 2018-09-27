@@ -1,0 +1,18 @@
+﻿<a href="/">Back to home</a>
+<form  method="post" style="display:table-cell">
+    <label for="name">Name:</label>
+    <input id="name" type="text" name="username" />
+    <br />
+    <label  for="pass">Password:</label>
+    <input id="pass" type="password" min="0" name="password" />
+    <br/>
+    <input type="submit" name="login" value="Login" />
+</form>
+
+<div>
+    Don't have an account? <a href="/register">Register</a>
+</div>
+<div style="display: {{{show-error}}}; color:red" >
+    {{{error}}}
+</div>
+

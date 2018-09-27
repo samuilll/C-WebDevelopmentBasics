@@ -1,0 +1,17 @@
+﻿<a href="/">Back to home</a>
+<h1>Register</h1>
+<form method="post" style="display:table-cell">
+    <label for="username">Name:</label>
+    <input id="username" type="text" name="username" />
+    <br />
+    <label for="password">Password:</label>
+    <input id="password" type="password" min="0" name="password" />
+    <br />
+    <label for="passwordConfirmed">Password:</label>
+    <input id="passwordConfirmed" type="password" min="0" name="passwordConfirmed" />
+    <br />
+    <input type="submit" name="register" value="Register" />
+</form>
+<div style="display: {{{show-error}}}; color:red">
+    {{{error}}}
+</div>
