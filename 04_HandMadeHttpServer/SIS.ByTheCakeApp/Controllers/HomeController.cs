@@ -1,6 +1,5 @@
 ﻿using SIS.ByTheCakeApp.Infrastructure;
-using SIS.HTTP.HTTP;
-using SIS.HTTP.HTTP.Contracts;
+using SIS.Http.HTTP.Contracts;
 
 namespace SIS.ByTheCakeApp.Controllers
 {

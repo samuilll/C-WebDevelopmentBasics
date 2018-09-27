@@ -1,4 +1,4 @@
-﻿using SIS.HTTP.HTTP.Contracts;
+﻿using SIS.Http.HTTP.Contracts;
 
 namespace SIS.WebServer.Handlers.Contracts
 {

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using SIS.HTTP.Enums;
+using SIS.Http.Enums;
 
 namespace SIS.WebServer.Routing.Contracts
 {

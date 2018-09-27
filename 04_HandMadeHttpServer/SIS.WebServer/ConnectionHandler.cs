@@ -2,9 +2,9 @@
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
-using SIS.HTTP.Common;
-using SIS.HTTP.Enums;
-using SIS.HTTP.HTTP;
+using SIS.Http.Common;
+using SIS.Http.Enums;
+using SIS.Http.HTTP;
 using SIS.WebServer.Handlers;
 using SIS.WebServer.Routing.Contracts;
 

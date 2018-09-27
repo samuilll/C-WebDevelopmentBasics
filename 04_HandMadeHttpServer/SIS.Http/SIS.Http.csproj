@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SIS.Http\SIS.Http.csproj" />
+    <PackageReference Include="Microsoft.IdentityModel" Version="6.1.7600.16394" />
   </ItemGroup>
 
 </Project>

@@ -1,9 +1,10 @@
 ﻿using System.Linq;
 using SIS.ByTheCakeApp.Infrastructure;
 using SIS.ByTheCakeApp.Models;
-using SIS.HTTP.HTTP;
-using SIS.HTTP.HTTP.Contracts;
-using SIS.HTTP.HTTP.Response;
+using SIS.Http.HTTP;
+using SIS.Http.HTTP.Contracts;
+using SIS.Http.HTTP.Response;
+
 
 namespace SIS.ByTheCakeApp.Controllers
 {

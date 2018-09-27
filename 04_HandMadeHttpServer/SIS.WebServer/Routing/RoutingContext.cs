@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using SIS.HTTP.Common;
+using SIS.Http.Common;
 using SIS.WebServer.Handlers;
 using SIS.WebServer.Routing.Contracts;
 

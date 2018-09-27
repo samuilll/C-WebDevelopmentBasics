@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2002
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SIS.HTTP", "HandMadeHttpServer\SIS.HTTP.csproj", "{F988C217-7D47-493A-856F-E2895E003A46}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SIS.WebServer", "SIS.WebServer\SIS.WebServer.csproj", "{26257053-2E36-4111-862D-A4A413D4EC0C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SIS.WebServer", "SIS.WebServer\SIS.WebServer.csproj", "{26257053-2E36-4111-862D-A4A413D4EC0C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SIS.ByTheCakeApp", "SIS.ByTheCakeApp\SIS.ByTheCakeApp.csproj", "{21B958F8-09BC-434B-9E4A-7A640A57079B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SIS.ByTheCakeApp", "SIS.ByTheCakeApp\SIS.ByTheCakeApp.csproj", "{21B958F8-09BC-434B-9E4A-7A640A57079B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SIS.Http", "SIS.Http\SIS.Http.csproj", "{4AB7B1C7-D869-40D6-8396-B9A48E93A858}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,10 +15,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F988C217-7D47-493A-856F-E2895E003A46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F988C217-7D47-493A-856F-E2895E003A46}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F988C217-7D47-493A-856F-E2895E003A46}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F988C217-7D47-493A-856F-E2895E003A46}.Release|Any CPU.Build.0 = Release|Any CPU
 		{26257053-2E36-4111-862D-A4A413D4EC0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{26257053-2E36-4111-862D-A4A413D4EC0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{26257053-2E36-4111-862D-A4A413D4EC0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -27,6 +23,10 @@ Global
 		{21B958F8-09BC-434B-9E4A-7A640A57079B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{21B958F8-09BC-434B-9E4A-7A640A57079B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{21B958F8-09BC-434B-9E4A-7A640A57079B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4AB7B1C7-D869-40D6-8396-B9A48E93A858}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AB7B1C7-D869-40D6-8396-B9A48E93A858}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4AB7B1C7-D869-40D6-8396-B9A48E93A858}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4AB7B1C7-D869-40D6-8396-B9A48E93A858}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

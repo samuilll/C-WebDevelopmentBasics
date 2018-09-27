@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using SIS.HTTP.Enums;
-using SIS.HTTP.HTTP.Contracts;
-using SIS.HTTP.HTTP.Response;
+using SIS.Http.Enums;
+using SIS.Http.HTTP.Contracts;
+using SIS.Http.HTTP.Response;
+
 
 namespace SIS.ByTheCakeApp.Infrastructure
 {

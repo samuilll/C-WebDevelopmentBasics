@@ -1,4 +1,4 @@
-﻿using SIS.HTTP.Contracts;
+﻿using SIS.Http.Contracts;
 
 namespace SIS.ByTheCakeApp.Infrastructure
 {

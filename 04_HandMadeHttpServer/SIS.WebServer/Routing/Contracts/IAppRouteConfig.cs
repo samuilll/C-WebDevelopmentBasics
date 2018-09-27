@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using SIS.HTTP.Enums;
-using SIS.HTTP.HTTP.Contracts;
+using SIS.Http.Enums;
+using SIS.Http.HTTP.Contracts;
+
 using SIS.WebServer.Handlers;
 
 namespace SIS.WebServer.Routing.Contracts

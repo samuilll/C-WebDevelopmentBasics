@@ -1,7 +1,8 @@
 ﻿using System;
-using SIS.HTTP.Common;
-using SIS.HTTP.HTTP;
-using SIS.HTTP.HTTP.Contracts;
+using SIS.Http.Common;
+using SIS.Http.HTTP;
+using SIS.Http.HTTP.Contracts;
+
 using SIS.WebServer.Handlers.Contracts;
 
 namespace SIS.WebServer.Handlers
