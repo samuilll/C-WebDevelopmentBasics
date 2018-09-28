@@ -18,6 +18,7 @@ namespace SIS.ByTheCakeApp.Common
 
         public const string InvalidProduct = "Invalid product parameters";
 
+        public const string NoSuchProduct = "There is no such product";
 
     }
 }

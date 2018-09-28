@@ -19,6 +19,6 @@ namespace SIS.ByTheCakeApp.Models
         [MaxLength(2000)]
         public string ImageUrl { get; set; }
 
-        public ICollection<OrderProduct> ProductOrders { get; set; } = new List<OrderProduct>();
+        public ICollection<OrderProduct> Orders { get; set; } = new List<OrderProduct>();
     }
 }

@@ -3,10 +3,12 @@
     <input type="text" name="search-term" placeholder="{{{search-term}}}"/>
     <input type="submit" name="operation" value="Search" />
 </form>
-<div style="display: {{{show-cart}}}">
-    Your Cart: <a href="/cart">{{{products}}}</a>
+<div style="display: {{{show-order}}}">
+    You ordered <a href="/order?search-term={{{search-term}}}&operation=Search">{{{products-count}}}</a>
 </div>
-
+<div style="display: {{{show-error}}}; color:red">
+    {{{error}}}
+</div>
 <div style="display: {{{show-products}}}">
 {{{products}}}
 </div>

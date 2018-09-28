@@ -15,6 +15,6 @@ namespace SIS.ByTheCakeApp.Models
 
         public User User { get; set; }
 
-        public ICollection<OrderProduct> OrderProducts { get; set; } = new List<OrderProduct>();
+        public ICollection<OrderProduct> Products { get; set; } = new List<OrderProduct>();
     }
 }

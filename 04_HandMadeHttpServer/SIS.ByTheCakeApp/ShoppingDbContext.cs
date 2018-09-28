@@ -37,11 +37,11 @@ namespace SIS.ByTheCakeApp
                 e.HasKey(op => new { op.ProductId, op.OrderId });
                 e
                 .HasOne(op => op.Order)
-                .WithMany(o=>o.OrderProducts);
+                .WithMany(o=>o.Products);
 
                 e
                 .HasOne(op => op.Product)
-                .WithMany(p => p.ProductOrders);
+                .WithMany(p => p.Orders);
             });
 
             builder.Entity<User>(e =>

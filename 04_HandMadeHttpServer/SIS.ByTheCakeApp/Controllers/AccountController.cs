@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.Primitives;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.Extensions.Primitives;
 using SIS.ByTheCakeApp.Common;
 using SIS.ByTheCakeApp.Infrastructure;
 using SIS.ByTheCakeApp.Models;
@@ -47,7 +50,7 @@ namespace SIS.ByTheCakeApp.Controllers
                 return this.FileViewResponse("Account/login");
             }
 
-            var userViewModel = this.userService.GetUserModelOrNull(name, password);
+            ProfileViewModel userViewModel = this.userService.GetUserModelOrNull(name, password);
 
             if (userViewModel==null)
             {
@@ -78,9 +81,9 @@ namespace SIS.ByTheCakeApp.Controllers
 
         internal IHttpResponse Register(RegisterUserViewModel model)
         {
-            var username = model.Username;
-            var password = model.Password;
-            var confirmPassword = model.ConfirmPassword;
+            string username = model.Username;
+            string password = model.Password;
+            string confirmPassword = model.ConfirmPassword;
 
             if (username.Length < 3 || password.Length < 3 || confirmPassword != password)
             {
@@ -89,7 +92,7 @@ namespace SIS.ByTheCakeApp.Controllers
                 return this.FileViewResponse("Account/register");
             }
 
-            var success = this.userService.Create(username, password);
+            bool success = this.userService.Create(username, password);
 
             if (success)
             {
@@ -112,6 +115,23 @@ namespace SIS.ByTheCakeApp.Controllers
             this.ViewData["show-error"] = "none";
         }
 
+        internal IHttpResponse OrdersView(IHttpRequest req)
+        {
+            int userId = req.Session.Get<ProfileViewModel>(SessionStore.CurrentUserKey).Id;
+
+            ICollection<OrderViewModel> orders = this.userService.GetOrders(userId);
+
+            List<string> resultArgs = orders
+                .Select(o => $@"<tr> <td><a href=""/order/{o.OrderId}"">{o.OrderId}</a></td><td>{o.CreationDate.ToString("dd-MM-yyyy")}</td> <td>${o.TotalSum}</td>")
+                .ToList();
+
+            string result = string.Join("",resultArgs);
+
+            this.ViewData["orders"] = result;
+
+            return this.FileViewResponse("Account/myOrders");
+        }
+
         private void SetAnonymousView()
         {
             this.ViewData["isAuthenticated"] = "none";
@@ -132,7 +152,7 @@ namespace SIS.ByTheCakeApp.Controllers
                 return this.FileViewResponse("Account/login");
             }
 
-            var userViewModel = req.Session.Get<ProfileViewModel>(SessionStore.CurrentUserKey);
+            ProfileViewModel userViewModel = req.Session.Get<ProfileViewModel>(SessionStore.CurrentUserKey);
 
             this.ViewData["profile-view"] = userViewModel.ToString();
 

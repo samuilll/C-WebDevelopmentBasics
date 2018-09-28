@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using SIS.ByTheCakeApp.Models;
 using SIS.ByTheCakeApp.Services.Contracts;
 using SIS.ByTheCakeApp.ViewModels;
@@ -54,12 +56,36 @@ namespace SIS.ByTheCakeApp.Services
                 }
                 var userViewModel = new ProfileViewModel()
                 {
+                    Id = user.Id,
                     Name = user.Username,
                     RegistrationDate = user.RegistrationDate,
                     OrdersCount = user.Orders.Count
                 };
 
                 return userViewModel;
+            }
+        }
+
+        public ICollection<OrderViewModel> GetOrders(int id)
+        {
+            using (ShoppingDbContext db = new ShoppingDbContext())
+            {
+                ICollection<OrderViewModel> orders = db
+                    .Users
+                    .Include(u=>u.Orders)
+                    .ThenInclude(o=>o.Products)
+                    .ThenInclude(p=>p.Product)
+                    .First(u => u.Id == id)
+                    .Orders
+                    .Select(o => new OrderViewModel
+                    {
+                        OrderId = o.Id,
+                        CreationDate = o.CreationDate,
+                        TotalSum = o.Products.Sum(op => op.Product.Price)
+                    })
+                    .ToList();
+
+                return orders;
             }
         }
     }

@@ -6,7 +6,7 @@ namespace SIS.Http.HTTP
     {
         public  const string SessionCookieKey = "SID";
         public const string CurrentUserKey = "^%Current_User_Session_Key%^";
-        public const string ShoppingCardKey = "^%Current_Shopping_Cart^%";
+        public const string ShoppingCardKey = "^%Current_Shopping_Order^%";
 
         private static readonly ConcurrentDictionary<string, HttpSession> sessions =
             new ConcurrentDictionary<string, HttpSession>();

@@ -5,29 +5,29 @@ namespace SIS.ByTheCakeApp.Models
 {
    public class ShoppingCard
     {
-        private List<ProductViewModel> orders;
+        private List<int> productIds;
 
-        public IReadOnlyList<ProductViewModel> Orders
+        public IReadOnlyList<int> ProductIds
         {
             get
             {
-                return (IReadOnlyList<ProductViewModel>)this.orders;
+                return (IReadOnlyList<int>)this.productIds;
             }
         } 
 
         public ShoppingCard()
         {
-            this.orders = new List<ProductViewModel>();
+            this.productIds = new List<int>();
         }
 
-        public void Add(ProductViewModel cake)
+        public void Add(int productId)
         {
-            this.orders.Add(cake);
+            this.productIds.Add(productId);
         }
 
         public void Clear()
         {
-            this.orders.Clear();
+            this.productIds.Clear();
         }
     }
 }

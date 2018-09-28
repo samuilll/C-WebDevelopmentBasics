@@ -9,29 +9,38 @@ using SIS.Http.HTTP.Response;
 namespace SIS.ByTheCakeApp.Controllers
 {
     using Services;
+    using SIS.ByTheCakeApp.ViewModels;
+    using Common;
+    using System.Collections.Generic;
+    using SIS.ByTheCakeApp.Services.Contracts;
+    using System;
 
-   public class ShoppingController:Controller
+    public class ShoppingController:Controller
     {
-        private readonly ProductService cakesManager = new ProductService();
+        private readonly ProductService productService = new ProductService();
 
-        public IHttpResponse AddToCart(IHttpRequest req)
+        private readonly IShoppingService shoppingService = new ShoppingService();
+
+        public IHttpResponse AddToOrder(IHttpRequest req)
         {
-            var idNumber = int.Parse(req.UrlParameters["id"]);
+            var productId = int.Parse(req.UrlParameters["id"]);
 
-            Product cake = null;//this.cakesManager.FindById(idNumber);
+            bool productExists = this.productService.ExistProduct(productId);//this.cakesManager.FindById(idNumber);
 
-            if (cake==null)
+            if (!productExists)
             {
-                return new NotFoundResponse();
+                this.InsertErrorMessage(AppConstants.NoSuchProduct);
+
+                return this.FileViewResponse("Home/index");
             }
 
             var shoppingCard = req.Session.Get<ShoppingCard>(SessionStore.ShoppingCardKey);
 
-           // shoppingCard.Add(cake);
+            shoppingCard.Add(productId);
 
             var redirectUrl = "/search";
 
-            const string searchTermKey = "searchTerm";
+            const string searchTermKey = "search-term";
 
             if (req.UrlParameters.ContainsKey(searchTermKey))
             {
@@ -41,25 +50,64 @@ namespace SIS.ByTheCakeApp.Controllers
             return new RedirectResponse(redirectUrl);
         }
 
-        public IHttpResponse ShowCart(IHttpRequest req)
+        public IHttpResponse ShowCurrentOrder(IHttpRequest req)
         {
-            var orders = req.Session.Get<ShoppingCard>(SessionStore.ShoppingCardKey).Orders.ToList();
+            List<int> productIds = GetProductIds(req);
 
-            var allOrdersArgs = orders
-                .Select(c => $"<div>{c.Name} - ${c.Price.ToString()} <br/></div>");
+            ICollection<ProductViewModel> products = this.shoppingService.GetOrderProducts(productIds);
+
+            ICollection<string> allOrdersArgs = products
+                .Select(p => $"<div>{p.ToString()} <br/></div>")
+                .ToList();
 
             var allOrdersString = string.Join("", allOrdersArgs);
 
-            var totalCost = orders.Sum(o => o.Price);
+            var totalCost = products.Sum(o => o.Price);
 
-            this.ViewData["cakes"] = allOrdersString;
+            this.ViewData["search-term"] = req.UrlParameters["search-term"];
+
+            this.ViewData["products"] = allOrdersString;
             this.ViewData["totalCost"] = $"Total Cost: ${totalCost}";
-     
-            return this.FileViewResponse("Shopping/showCart");
+
+            return this.FileViewResponse("Shopping/showCurrentOrder");
+        }
+
+        private static List<int> GetProductIds(IHttpRequest req)
+        {
+            return req.Session.Get<ShoppingCard>(SessionStore.ShoppingCardKey).ProductIds.ToList();
+        }
+
+        internal IHttpResponse ShowCompleteOrder(IHttpRequest req)
+        {
+            int orderId = int.Parse(req.UrlParameters["id"]);
+
+            var order = this.shoppingService.GetOrderById(orderId);
+
+            ICollection<ProductViewModel> products = this.productService.GetAllByOrderId(orderId);
+
+            List<string> resultArgs = products
+               .Select(p => $@"<tr> <td><a href=""/product/partOfOrderDetails/{p.Id}?order-id={orderId}"">{p.Name}</a></td><td>{p.Price}</td><br/>")
+               .ToList();
+
+            string result = string.Join("", resultArgs);
+
+            this.ViewData["date-info"] = $"Created on: { order.CreationDate.ToString("dd-MM-yyyy")}";
+            this.ViewData["order-id"] =orderId.ToString() ;
+            this.ViewData["products"] = result;
+
+            return this.FileViewResponse("Shopping/showCompleteOrder");
         }
 
         public IHttpResponse Success(IHttpRequest req)
         {
+            List<int> productIds = GetProductIds(req);
+
+            ProfileViewModel user = req.Session.Get<ProfileViewModel>(SessionStore.CurrentUserKey);
+
+            int userId = user.Id;
+
+            this.shoppingService.CreateOrder(productIds,userId);
+
             req.Session.Get<ShoppingCard>(SessionStore.ShoppingCardKey).Clear();
 
             return this.FileViewResponse("Shopping/success");

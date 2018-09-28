@@ -68,10 +68,24 @@ namespace SIS.ByTheCakeApp
             appRouteConfig
                 .Get(
                 "/shopping/add/{(?<id>[0-9]+)}",
-                req => new ShoppingController().AddToCart(req)
+                req => new ShoppingController().AddToOrder(req)
                 );
 
-            appRouteConfig.Get("/cart", req => new ShoppingController().ShowCart(req));
+            appRouteConfig
+                .Get(
+                "/product/details/{(?<id>[0-9]+)}",
+                req => new ProductController().Details(req)
+                );
+
+            appRouteConfig
+               .Get(
+               "/product/partOfOrderDetails/{(?<id>[0-9]+)}",
+               req => new ProductController().OrderProductDetails(req)
+               );
+
+            appRouteConfig.Get("/order", req => new ShoppingController().ShowCurrentOrder(req));
+
+            appRouteConfig.Get("/order/{(?<id>[0-9]+)}", req => new ShoppingController().ShowCompleteOrder(req));
 
             appRouteConfig.Get("/success", req => new ShoppingController().Success(req));
 
@@ -90,6 +104,8 @@ namespace SIS.ByTheCakeApp
                 }));
 
             appRouteConfig.Get("/profile", req => new AccountController().ProfileView(req));
+
+            appRouteConfig.Get("/myOrders", req => new AccountController().OrdersView(req));
 
         }
 

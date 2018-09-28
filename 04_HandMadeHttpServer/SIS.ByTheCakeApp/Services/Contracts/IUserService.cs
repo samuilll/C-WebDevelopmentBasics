@@ -1,5 +1,6 @@
 ﻿using SIS.ByTheCakeApp.Models;
 using SIS.ByTheCakeApp.ViewModels;
+using System.Collections.Generic;
 
 namespace SIS.ByTheCakeApp.Services.Contracts
 {
@@ -10,5 +11,7 @@ namespace SIS.ByTheCakeApp.Services.Contracts
         bool UserExist(string name, string password);
 
         ProfileViewModel GetUserModelOrNull(string name, string password);
+
+        ICollection<OrderViewModel> GetOrders(int id);
     }
 }

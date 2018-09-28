@@ -10,6 +10,9 @@ using SIS.Http.HTTP.Contracts;
 
 namespace SIS.ByTheCakeApp.Controllers
 {
+    using System.Collections.Generic;
+    using ViewModels;
+
     public class ProductController : Controller
     {
 
@@ -47,20 +50,20 @@ namespace SIS.ByTheCakeApp.Controllers
         {
             var urlParams = req.UrlParameters;
 
-            this.ViewData["show-cart"] = "none";
+            this.ViewData["show-order"] = "none";
             this.ViewData["show-products"] = "none";
             this.ViewData["search-term"] = "Search products...";
 
             var shoppingCard = req.Session.Get<ShoppingCard>(SessionStore.ShoppingCardKey);
 
-            var productsCount = shoppingCard.Orders.Count;
+            var productsCount = shoppingCard.ProductIds.Count;
 
             if (productsCount > 0)
             {
                 var productsText = productsCount == 1 ? "Product" : "Products";
 
-                this.ViewData["show-cart"] = "block";
-                this.ViewData["products"] = $"{productsCount} {productsText}";
+                this.ViewData["show-order"] = "block";
+                this.ViewData["products-count"] = $"{productsCount.ToString()} {productsText}";
             }
 
             if (urlParams.ContainsKey("operation"))
@@ -78,7 +81,7 @@ namespace SIS.ByTheCakeApp.Controllers
             var products = this.productService.GetAllBySearchedTerm(searchTerm);
 
             var resultArgs = products
-                .Select(p=> $@"<div>{p.Name} ${p.Price} <a href=""/shopping/add/{p.Id}?search-term=={searchTerm}"">Order</a> </div>")
+                .Select(p=> $@"<div><a href=""/product/details/{p.Id}?search-term={searchTerm}"">{p.Name}</a> ${p.Price} <a href=""/shopping/add/{p.Id}?search-term={searchTerm}"">Order</a> </div>")
                 .ToList();
 
             var result = string.Join(Environment.NewLine, resultArgs);
@@ -88,7 +91,55 @@ namespace SIS.ByTheCakeApp.Controllers
 
             return this.FileViewResponse("Product/search");
         }
+
+        internal IHttpResponse OrderProductDetails(IHttpRequest req)
+        {
+            Dictionary<string, string> urlParams = req.UrlParameters;
+
+            int productId = int.Parse(urlParams["id"]);
+
+            string orderIdString = urlParams["order-id"];
+
+            ProductViewModel product = this.productService.GetByIdOrNull(productId);
+
+            if (product == null)
+            {
+                this.ViewData["product-details"] = AppConstants.NoSuchProduct;
+
+                return this.FileViewResponse($"Product/details");
+            }
+
+            this.ViewData["order-id"] = orderIdString;
+            this.ViewData["product-details"] = product.ToString();
+
+            return this.FileViewResponse($"Product/partOfOrderDetails");
         }
+
+        public IHttpResponse Details(IHttpRequest req)
+        {
+            Dictionary<string,string> urlParams = req.UrlParameters;
+
+            int id = int.Parse(urlParams["id"]);
+
+            ProductViewModel product = this.productService.GetByIdOrNull(id);
+
+            if (urlParams.ContainsKey("search-term"))
+            {
+                this.ViewData["search-term"] = urlParams["search-term"];
+            }
+
+            if (product==null)
+            {
+                this.ViewData["product-details"] = AppConstants.NoSuchProduct;
+
+                return this.FileViewResponse($"Product/details");
+            }
+
+            this.ViewData["product-details"] = product.ToString();
+
+            return this.FileViewResponse($"Product/details");
+        }
+    }
 
     }
 

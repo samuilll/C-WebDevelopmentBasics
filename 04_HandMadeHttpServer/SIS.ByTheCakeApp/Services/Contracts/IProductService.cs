@@ -10,7 +10,12 @@ namespace SIS.ByTheCakeApp.Services.Contracts
     {
         bool Add(string name, string price, string url);
 
-        ICollection<ProductViewModel> GetAllBySearchedTerm(string searchTerm); 
+        ICollection<ProductViewModel> GetAllBySearchedTerm(string searchTerm);
 
+        ICollection<ProductViewModel> GetAllByOrderId(int orderId);
+
+        ProductViewModel GetByIdOrNull(int id);
+
+        bool ExistProduct(int id);
     }
 }
