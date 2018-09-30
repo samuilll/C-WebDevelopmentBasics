@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using SIS.Http.Common;
 using SIS.Http.Enums;
 using SIS.Http.HTTP;
+using SIS.Http.HTTP.Contracts;
 using SIS.WebServer.Handlers;
 using SIS.WebServer.Routing.Contracts;
 
@@ -27,19 +28,19 @@ namespace SIS.WebServer
 
         public async Task ProcessRequestAsync()
         {
-            var httpRequest = await this.ReadRequest();
+            string httpRequest = await this.ReadRequest();
 
             if (httpRequest != null)
             {
-                var httpContext = new HttpContext(httpRequest);
+                HttpContext httpContext = new HttpContext(httpRequest);
 
                 if (!(httpContext.Request.RequestMethod==HttpRequestMethod.POST && httpContext.Request.FormData.Count==0))
                 {
-                    var httpResponse = new HttpHandler(this.serverRouteConfig).Handle(httpContext);
+                    IHttpResponse httpResponse = new HttpHandler(this.serverRouteConfig).Handle(httpContext);
 
-                    var responseBytes = Encoding.UTF8.GetBytes(httpResponse.ToString());
+                    byte[] responseBytes = Encoding.UTF8.GetBytes(httpResponse.ToString());
 
-                    var byteSegments = new ArraySegment<byte>(responseBytes);
+                    ArraySegment<byte> byteSegments = new ArraySegment<byte>(responseBytes);
 
                     await this.client.SendAsync(byteSegments, SocketFlags.None);
 
@@ -57,9 +58,9 @@ namespace SIS.WebServer
 
         private async Task<string> ReadRequest()
         {
-            var result = new StringBuilder();
+            StringBuilder result = new StringBuilder();
 
-            var data = new ArraySegment<byte>(new byte[1024]);
+            ArraySegment<byte> data = new ArraySegment<byte>(new byte[1024]);
 
             while (true)
             {
@@ -70,7 +71,7 @@ namespace SIS.WebServer
                     break;
                 }
 
-                var bytesAsString = Encoding.UTF8.GetString(data.Array, 0, numberOfBytesRead);
+                string bytesAsString = Encoding.UTF8.GetString(data.Array, 0, numberOfBytesRead);
 
                 result.Append(bytesAsString);
 

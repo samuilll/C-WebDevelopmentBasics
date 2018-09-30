@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Linq;
 using System.Text.RegularExpressions;
+using SIS.Http.Enums;
 using SIS.Http.HTTP;
 using SIS.Http.HTTP.Contracts;
 using SIS.Http.HTTP.Response;
-
+using SIS.Http.Views;
 using SIS.WebServer.Handlers.Contracts;
 using SIS.WebServer.Routing.Contracts;
 
@@ -29,6 +30,18 @@ namespace SIS.WebServer.Handlers
 
                 var anonymousPaths = this.serverRouteConfig.AppRouteConfig.AnonymousPaths.ToList();
 
+                const string StylesFolder = "/Styles";
+
+                const string ScriptsFolder = "/Scripts";
+
+                var allowedFolders = new string[] { StylesFolder,ScriptsFolder};
+
+                if (allowedFolders.Any(folder => currentPath.StartsWith(folder)))
+                {
+                    var extension = currentPath.Substring(currentPath.LastIndexOf('.')+1,currentPath.Length-currentPath.LastIndexOf('.')-1);
+
+                    return new ViewResponse(HttpStatusCode.OK, new FileView(currentPath,extension));
+                }
 
                 if (!anonymousPaths.Contains(currentPath) && !context.Request.Session.Contains(SessionStore.CurrentUserKey))
                 {

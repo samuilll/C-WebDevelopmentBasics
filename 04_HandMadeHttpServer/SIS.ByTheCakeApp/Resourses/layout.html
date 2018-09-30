@@ -8,15 +8,19 @@
     <meta name="keywords" content="cakes,buy">
     <meta name="author" content="Samuil Dechev">
     <title>By the cake</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 
 <body>
-    <div style="display:{{{isAuthenticated}}}">
+    <div style="display:{{{user-view}}}">
         Hello, {{{username}}}
         <a style="text-align: left" href="/logout">
             <input type="button" name="logout" value="Logout" />
-        </a>
-      
+        </a>     
     </div>
     {{{content}}}
     <hr />

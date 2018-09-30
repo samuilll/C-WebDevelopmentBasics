@@ -18,8 +18,14 @@ namespace SIS.ByTheCakeApp.Controllers
 
         private readonly ProductService productService = new ProductService();
 
-        public IHttpResponse Add()
+        public ProductController()
         {
+        }
+
+        public IHttpResponse Add(IHttpRequest req)
+        {
+            base.SetUserGreeting(req.Session.Get<ProfileViewModel>(SessionStore.CurrentUserKey).Name);
+
             this.ViewData["show-result"] = "none";
 
             return this.FileViewResponse("Product/add");
@@ -27,7 +33,6 @@ namespace SIS.ByTheCakeApp.Controllers
 
         public IHttpResponse Add(string name, string priceAsString,string pictureUrl)
         {
-
             this.ViewData["name"] = name;
             this.ViewData["price"] = priceAsString;
             this.ViewData["url"] = pictureUrl;
@@ -48,6 +53,8 @@ namespace SIS.ByTheCakeApp.Controllers
 
         public IHttpResponse Search(IHttpRequest req)
         {
+            base.SetUserGreeting(req.Session.Get<ProfileViewModel>(SessionStore.CurrentUserKey).Name);
+
             var urlParams = req.UrlParameters;
 
             this.ViewData["show-order"] = "none";
@@ -92,8 +99,10 @@ namespace SIS.ByTheCakeApp.Controllers
             return this.FileViewResponse("Product/search");
         }
 
-        internal IHttpResponse OrderProductDetails(IHttpRequest req)
+        public IHttpResponse OrderProductDetails(IHttpRequest req)
         {
+            base.SetUserGreeting(req.Session.Get<ProfileViewModel>(SessionStore.CurrentUserKey).Name);
+
             Dictionary<string, string> urlParams = req.UrlParameters;
 
             int productId = int.Parse(urlParams["id"]);
@@ -117,6 +126,8 @@ namespace SIS.ByTheCakeApp.Controllers
 
         public IHttpResponse Details(IHttpRequest req)
         {
+            base.SetUserGreeting(req.Session.Get<ProfileViewModel>(SessionStore.CurrentUserKey).Name);
+
             Dictionary<string,string> urlParams = req.UrlParameters;
 
             int id = int.Parse(urlParams["id"]);

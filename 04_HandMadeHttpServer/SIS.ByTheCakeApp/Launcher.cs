@@ -16,6 +16,7 @@ namespace SIS.ByTheCakeApp
         public void Run()
         {
             var app = new CakeApplication();
+
             app.InitializeDatabase();
 
             IAppRouteConfig routeConfig = new AppRouteConfig();

@@ -35,13 +35,13 @@ namespace SIS.ByTheCakeApp
             appRouteConfig
                 .Get(
                 "/about",
-                 req => new HomeController().About()
+                 req => new HomeController().About(req)
                 );
 
             appRouteConfig
                 .Get(
                 "/add",
-                req=>new ProductController().Add()
+                req=>new ProductController().Add(req)
                 );
 
             appRouteConfig

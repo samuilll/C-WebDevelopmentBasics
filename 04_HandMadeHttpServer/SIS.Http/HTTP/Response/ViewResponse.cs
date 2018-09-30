@@ -1,6 +1,6 @@
-﻿using System.Text;
-using SIS.Http.Contracts;
+﻿using SIS.Http.Contracts;
 using SIS.Http.Enums;
+using System.Text;
 
 namespace SIS.Http.HTTP.Response
 {
@@ -12,6 +12,7 @@ namespace SIS.Http.HTTP.Response
             : base()
         {
             this.view = view;
+
             this.StatusCode = statusCode;
 
             this.Headers.Add(new HttpHeader(HttpHeader.ContentType,"text/html"));

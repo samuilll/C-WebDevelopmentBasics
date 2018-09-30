@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using SIS.Http.Enums;
 using SIS.Http.HTTP.Contracts;
 using SIS.Http.HTTP.Response;
-
+using SIS.Http.Views;
 
 namespace SIS.ByTheCakeApp.Infrastructure
 {
@@ -17,46 +18,46 @@ namespace SIS.ByTheCakeApp.Infrastructure
         {
             ViewData = new Dictionary<string,string>();
 
-            this.ViewData["isAuthenticated"] = "block";
-
-            this.ViewData["show-login"] = "none";
+            this.SetUserGreeting();
 
             this.ViewData["show-error"] = "none";
         }
 
-        public const string DefaultPath = "../../../Resourses/{0}.html";
-
-        public const string ContentPlaceholder = "{{{content}}}";
-
         public IHttpResponse FileViewResponse(string fileName)
         {
-            string result = ProcessFileHtml(fileName);
-
-            if (this.ViewData.Any())
-            {
-                foreach (var value in this.ViewData)
-                {
-                    result = result.Replace($"{{{{{{{value.Key}}}}}}}", value.Value);
-                }
-            }
-
-            return new ViewResponse(HttpStatusCode.OK, new FileView(result));
+            return new ViewResponse(HttpStatusCode.OK, new FileView(fileName,this.ViewData));
         }
 
-        private static string ProcessFileHtml(string fileName)
-        {
-            var layout = File.ReadAllText(string.Format(DefaultPath, "layout"));
-
-            var fileHtml = File.ReadAllText(string.Format(DefaultPath, $"{fileName}"));
-
-            var result = layout.Replace(ContentPlaceholder, fileHtml);
-            return result;
-        }
 
         protected void InsertErrorMessage(string message)
         {
             this.ViewData["show-error"] = "block";
             this.ViewData["error"] = message;
+        }
+
+        protected void SetAnonymousView()
+        {
+            this.ViewData["show-login"] = "block";
+            this.ViewData["user-view"] = "none";
+        }
+
+        protected void SetUserGreeting()
+        {
+            this.ViewData["user-view"] = "block";
+            this.ViewData["show-login"] = "none";
+        }
+
+        protected void SetUserGreeting(string username)
+        {
+            this.ViewData["user-view"] = "block";
+            this.ViewData["show-login"] = "none";
+            this.ViewData["username"] = username;
+        }
+
+
+        protected void SetWithoutErrorView()
+        {
+            this.ViewData["show-error"] = "none";
         }
     }
 }

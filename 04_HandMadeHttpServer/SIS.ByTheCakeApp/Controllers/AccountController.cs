@@ -32,8 +32,9 @@ namespace SIS.ByTheCakeApp.Controllers
                 return this.FileViewResponse("Home/index");
             }
 
-            SetAnonymousView();
-            SetWithoutErrorView();
+            this.SetAnonymousView();
+
+            base.SetWithoutErrorView();
 
             return this.FileViewResponse("Account/login");
         }
@@ -73,8 +74,9 @@ namespace SIS.ByTheCakeApp.Controllers
 
         internal IHttpResponse Register()
         {
-            SetAnonymousView();
-            SetWithoutErrorView();
+            base.SetAnonymousView();
+
+            base.SetWithoutErrorView();
 
             return this.FileViewResponse("Account/register");
         }
@@ -103,16 +105,10 @@ namespace SIS.ByTheCakeApp.Controllers
 
             else
             {
-                this.ViewData["show-error"] = "block";
-                this.ViewData["error"] = "This username is taken";
+               base.InsertErrorMessage("This username is taken");
 
                 return this.FileViewResponse("Account/register");
             }
-        }
-
-        private void SetWithoutErrorView()
-        {
-            this.ViewData["show-error"] = "none";
         }
 
         internal IHttpResponse OrdersView(IHttpRequest req)
@@ -129,22 +125,15 @@ namespace SIS.ByTheCakeApp.Controllers
 
             this.ViewData["orders"] = result;
 
+            base.SetUserGreeting(req.Session.Get<ProfileViewModel>(SessionStore.CurrentUserKey).Name);
+
             return this.FileViewResponse("Account/myOrders");
-        }
-
-        private void SetAnonymousView()
-        {
-            this.ViewData["isAuthenticated"] = "none";
-        }
-
-        private void LogInUser(IHttpRequest req, ProfileViewModel user)
-        {
-            req.Session.Add(SessionStore.CurrentUserKey, user);
-            req.Session.Add(SessionStore.ShoppingCardKey, new ShoppingCard());
         }
 
         public IHttpResponse ProfileView(IHttpRequest req)
         {
+            base.SetUserGreeting(req.Session.Get<ProfileViewModel>(SessionStore.CurrentUserKey).Name);
+
             if (!req.Session.IsAuthenticated())
             {
                 InsertErrorMessage(AppConstants.NoLoggedUser);
@@ -157,6 +146,13 @@ namespace SIS.ByTheCakeApp.Controllers
             this.ViewData["profile-view"] = userViewModel.ToString();
 
             return this.FileViewResponse("Account/profile");
+        }
+
+
+        private void LogInUser(IHttpRequest req, ProfileViewModel user)
+        {
+            req.Session.Add(SessionStore.CurrentUserKey, user);
+            req.Session.Add(SessionStore.ShoppingCardKey, new ShoppingCard());
         }
     }
 }

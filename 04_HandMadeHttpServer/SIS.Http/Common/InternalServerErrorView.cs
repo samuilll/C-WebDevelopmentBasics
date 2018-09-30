@@ -13,7 +13,6 @@ namespace SIS.Http.Common
         public string View()
         {
             return $"<h1>{this.exception.Message}</h1><h2>{this.exception.StackTrace}</h2>";
-
-        }
+       }
     }
 }

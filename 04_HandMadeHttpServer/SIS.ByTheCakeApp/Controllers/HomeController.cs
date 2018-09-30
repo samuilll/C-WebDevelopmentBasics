@@ -1,4 +1,6 @@
 ﻿using SIS.ByTheCakeApp.Infrastructure;
+using SIS.ByTheCakeApp.ViewModels;
+using SIS.Http.HTTP;
 using SIS.Http.HTTP.Contracts;
 
 namespace SIS.ByTheCakeApp.Controllers
@@ -9,13 +11,22 @@ namespace SIS.ByTheCakeApp.Controllers
         {
             if (!req.Session.IsAuthenticated())
             {
-                this.ViewData["show-login"] = "block";
+                base.SetAnonymousView();             
+            }
+            else
+            {
+                base.SetUserGreeting(req.Session.Get<ProfileViewModel>(SessionStore.CurrentUserKey).Name);
             }
 
-         return   this.FileViewResponse("Home/index");
+            return   this.FileViewResponse("Home/index");
         }
 
-        public IHttpResponse About() => this.FileViewResponse("Home/about");
+        public IHttpResponse About(IHttpRequest req)
+        {
+            base.SetUserGreeting(req.Session.Get<ProfileViewModel>(SessionStore.CurrentUserKey).Name);
+
+           return this.FileViewResponse("Home/about");
+        }
                           
     }
 }

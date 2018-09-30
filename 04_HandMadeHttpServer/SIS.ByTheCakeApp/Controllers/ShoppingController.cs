@@ -21,8 +21,14 @@ namespace SIS.ByTheCakeApp.Controllers
 
         private readonly IShoppingService shoppingService = new ShoppingService();
 
+        public ShoppingController()
+        {
+        }
+
         public IHttpResponse AddToOrder(IHttpRequest req)
         {
+            base.SetUserGreeting(req.Session.Get<ProfileViewModel>(SessionStore.CurrentUserKey).Name);
+
             var productId = int.Parse(req.UrlParameters["id"]);
 
             bool productExists = this.productService.ExistProduct(productId);//this.cakesManager.FindById(idNumber);
@@ -52,6 +58,8 @@ namespace SIS.ByTheCakeApp.Controllers
 
         public IHttpResponse ShowCurrentOrder(IHttpRequest req)
         {
+            base.SetUserGreeting(req.Session.Get<ProfileViewModel>(SessionStore.CurrentUserKey).Name);
+
             List<int> productIds = GetProductIds(req);
 
             ICollection<ProductViewModel> products = this.shoppingService.GetOrderProducts(productIds);
@@ -77,8 +85,10 @@ namespace SIS.ByTheCakeApp.Controllers
             return req.Session.Get<ShoppingCard>(SessionStore.ShoppingCardKey).ProductIds.ToList();
         }
 
-        internal IHttpResponse ShowCompleteOrder(IHttpRequest req)
+        public IHttpResponse ShowCompleteOrder(IHttpRequest req)
         {
+            base.SetUserGreeting(req.Session.Get<ProfileViewModel>(SessionStore.CurrentUserKey).Name);
+
             int orderId = int.Parse(req.UrlParameters["id"]);
 
             var order = this.shoppingService.GetOrderById(orderId);
@@ -100,6 +110,8 @@ namespace SIS.ByTheCakeApp.Controllers
 
         public IHttpResponse Success(IHttpRequest req)
         {
+            base.SetUserGreeting(req.Session.Get<ProfileViewModel>(SessionStore.CurrentUserKey).Name);
+
             List<int> productIds = GetProductIds(req);
 
             ProfileViewModel user = req.Session.Get<ProfileViewModel>(SessionStore.CurrentUserKey);
