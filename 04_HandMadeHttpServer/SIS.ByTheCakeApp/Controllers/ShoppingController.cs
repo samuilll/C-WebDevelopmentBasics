@@ -65,7 +65,7 @@ namespace SIS.ByTheCakeApp.Controllers
             ICollection<ProductViewModel> products = this.shoppingService.GetOrderProducts(productIds);
 
             ICollection<string> allOrdersArgs = products
-                .Select(p => $"<div>{p.ToString()} <br/></div>")
+                .Select(p => $"<div class=\"col-sm-4\">{p.ToString()} <br/></div>")
                 .ToList();
 
             var allOrdersString = string.Join("", allOrdersArgs);

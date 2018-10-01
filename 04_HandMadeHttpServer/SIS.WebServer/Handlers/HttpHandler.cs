@@ -40,7 +40,7 @@ namespace SIS.WebServer.Handlers
                 {
                     var extension = currentPath.Substring(currentPath.LastIndexOf('.')+1,currentPath.Length-currentPath.LastIndexOf('.')-1);
 
-                    return new ViewResponse(HttpStatusCode.OK, new FileView(currentPath,extension));
+                    return new TextPlainResponse(HttpStatusCode.OK, new FileView(currentPath,extension));
                 }
 
                 if (!anonymousPaths.Contains(currentPath) && !context.Request.Session.Contains(SessionStore.CurrentUserKey))
