@@ -1,13 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
-using SIS.Data.Config;
-using SIS.Data.Models;
+﻿using GamesStoreData.Config;
+using GamesStoreData.Models;
+using Microsoft.EntityFrameworkCore;
 
-namespace SIS.Data
+namespace GamesStoreData
 {
     public class GameStoreDbContext:DbContext
     {
         public DbSet<User> Users { get; set; }
-        public DbSet<Game> Products { get; set; }
+        public DbSet<Game> Games { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderGame> OrdersGames { get; set; }
 

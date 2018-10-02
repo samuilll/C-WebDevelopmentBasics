@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace SIS.Data.Models
+namespace GamesStoreData.Models
 {
     public class Order
     {

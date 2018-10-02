@@ -1,4 +1,4 @@
-﻿namespace SIS.Data.Config
+﻿namespace GamesStoreData.Config
 {
    public class Configuration
     {

@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace SIS.Data.Models
+namespace GamesStoreData.Models
 {
-   public class ShoppingCard
+   public class ShoppingCart
     {
         private List<int> productIds;
 
@@ -14,7 +14,7 @@ namespace SIS.Data.Models
             }
         } 
 
-        public ShoppingCard()
+        public ShoppingCart()
         {
             this.productIds = new List<int>();
         }

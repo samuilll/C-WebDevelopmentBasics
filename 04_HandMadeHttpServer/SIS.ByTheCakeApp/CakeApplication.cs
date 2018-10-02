@@ -2,6 +2,7 @@
 using SIS.ByTheCakeApp.Controllers;
 using SIS.ByTheCakeData;
 using SIS.ByTheCakeData.ViewModels;
+using SIS.Http.HTTP;
 using SIS.WebServer.Contracts;
 using SIS.WebServer.Routing.Contracts;
 
@@ -52,7 +53,8 @@ namespace SIS.ByTheCakeApp
                 .Add(
                     req.FormData["name"],
                     req.FormData["price"],
-                    req.FormData["url"]
+                    req.FormData["url"],
+                    req.Session.Get<ProfileViewModel>(SessionStore.CurrentUserKey).Name
                     ));
 
             appRouteConfig.Get("/search", req => new ProductController().Search(req));

@@ -28,16 +28,20 @@ namespace SIS.ByTheCakeApp.Controllers
 
             this.ViewData["show-result"] = "none";
 
+            base.SetUserGreeting(req.Session.Get<ProfileViewModel>(SessionStore.CurrentUserKey).Name);
+
             return this.FileViewResponse("Product/add");
         }
 
-        public IHttpResponse Add(string name, string priceAsString,string pictureUrl)
+        public IHttpResponse Add(string name, string priceAsString,string pictureUrl,string username)
         {
             this.ViewData["name"] = name;
             this.ViewData["price"] = priceAsString;
             this.ViewData["url"] = pictureUrl;
 
            bool success =  this.productService.Add(name, priceAsString, pictureUrl);
+
+          base.SetUserGreeting(username);
 
             if (success)
             {
@@ -47,6 +51,7 @@ namespace SIS.ByTheCakeApp.Controllers
             {
                 this.InsertErrorMessage(AppConstants.InvalidProduct);
             }
+
 
             return this.FileViewResponse("Product/add");
         }
