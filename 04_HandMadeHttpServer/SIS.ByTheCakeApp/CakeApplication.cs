@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SIS.ByTheCakeApp.Controllers;
-using SIS.ByTheCakeApp.ViewModels;
+using SIS.ByTheCakeData;
+using SIS.ByTheCakeData.ViewModels;
 using SIS.WebServer.Contracts;
 using SIS.WebServer.Routing.Contracts;
 

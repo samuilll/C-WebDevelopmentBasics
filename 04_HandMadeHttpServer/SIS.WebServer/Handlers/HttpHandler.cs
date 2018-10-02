@@ -30,11 +30,16 @@ namespace SIS.WebServer.Handlers
 
                 var anonymousPaths = this.serverRouteConfig.AppRouteConfig.AnonymousPaths.ToList();
 
-                const string StylesFolder = "/Styles";
+                const string StylesFolder = "/styles";
 
-                const string ScriptsFolder = "/Scripts";
+                const string ScriptsFolder = "/scripts";
 
-                var allowedFolders = new string[] { StylesFolder,ScriptsFolder};
+                const string CssFolder = "/css";
+
+                const string JsFolder = "/js";
+
+
+                var allowedFolders = new string[] { StylesFolder,ScriptsFolder,CssFolder,JsFolder};
 
                 if (allowedFolders.Any(folder => currentPath.StartsWith(folder)))
                 {

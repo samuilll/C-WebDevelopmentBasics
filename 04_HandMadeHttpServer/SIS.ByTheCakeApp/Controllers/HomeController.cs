@@ -1,7 +1,7 @@
-﻿using SIS.ByTheCakeApp.Infrastructure;
-using SIS.ByTheCakeApp.ViewModels;
+﻿using SIS.ByTheCakeData.ViewModels;
 using SIS.Http.HTTP;
 using SIS.Http.HTTP.Contracts;
+using SIS.Infrastructure;
 
 namespace SIS.ByTheCakeApp.Controllers
 {

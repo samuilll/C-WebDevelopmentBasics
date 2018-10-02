@@ -1,9 +1,9 @@
-﻿body  {
+﻿
+nav{
+    display:block;
 }
 
-ul {
-    text-align:initial;
-}
-div {
-   color: red;
+.greeting {
+    text-align:center;
+    color:chocolate;
 }

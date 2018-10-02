@@ -1,0 +1,10 @@
+﻿body  {
+}
+nav{
+    display:block;
+}
+
+.greeting {
+    text-align:center;
+    color:chocolate;
+}

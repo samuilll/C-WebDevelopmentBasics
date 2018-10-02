@@ -1,18 +1,18 @@
 ﻿using System.Linq;
-using SIS.ByTheCakeApp.Infrastructure;
-using SIS.ByTheCakeApp.Models;
+using SIS.ByTheCakeData.Models;
+using SIS.ByTheCakeData.Services;
+using SIS.ByTheCakeData.Services.Contracts;
+using SIS.ByTheCakeData.ViewModels;
 using SIS.Http.HTTP;
 using SIS.Http.HTTP.Contracts;
 using SIS.Http.HTTP.Response;
+using SIS.Infrastructure;
 
 
 namespace SIS.ByTheCakeApp.Controllers
 {
-    using Services;
-    using SIS.ByTheCakeApp.ViewModels;
     using Common;
     using System.Collections.Generic;
-    using SIS.ByTheCakeApp.Services.Contracts;
     using System;
 
     public class ShoppingController:Controller

@@ -1,16 +1,18 @@
-﻿<a href="/">Back to home</a>
-<h1>Register</h1>
-<form method="post" style="display:table-cell">
-    <label for="username">Name:</label>
-    <input id="username" type="text" name="username" />
-    <br />
-    <label for="password">Password:</label>
-    <input id="password" type="password" min="0" name="password" />
-    <br />
-    <label for="passwordConfirmed">Password:</label>
-    <input id="passwordConfirmed" type="password" min="0" name="passwordConfirmed" />
-    <br />
-    <input type="submit" name="register" value="Register" />
+﻿<h1>Register</h1>
+<form method="post">
+    <div class="form-group row">
+        <label  class="form-control-label col-md-2" for="username">Name:</label>
+        <input class="col-md-3" id="username" type="text" name="username"/>
+    </div>
+    <div class="form-group row">
+        <label class="form-control-label col-md-2" for="password">Password:</label>
+        <input class="col-md-3" id="password" type="password" min="0" name="password"/>
+    </div>
+    <div class="form-group row">
+        <label class="form-control-label col-md-2" for="passwordConfirmed">Confirm Password:</label>
+        <input class="col-md-3" id="passwordConfirmed" type="password" min="0" name="passwordConfirmed"/>
+    </div>
+    <input type="submit" name="register" value="Register"/>
 </form>
 <div style="display: {{{show-error}}}; color:red">
     {{{error}}}

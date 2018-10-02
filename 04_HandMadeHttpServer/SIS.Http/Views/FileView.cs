@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using SIS.Http.Common;
 
 namespace SIS.Http.Views
 {
@@ -14,7 +15,7 @@ namespace SIS.Http.Views
 
         private string result;
 
-        public string DefaultPath = "../../../Resourses/{0}.html";
+        public string DefaultPath = GlobalConstants.DefaultPath;
 
         public const string ContentPlaceholder = "{{{content}}}";
 
@@ -36,12 +37,23 @@ namespace SIS.Http.Views
 
         public FileView(string path,string ext)
         {
-
-            this.DefaultPath = $"../../../Resourses{path}";
+            CreatePathWithExplicitExtension(path);
 
             this.result = ProcessNonHtmlFile();
 
             ReplaceDictionaryItems();
+        }
+
+        private void CreatePathWithExplicitExtension(string path)
+        {
+            var splitPath = this.DefaultPath.Split('/');
+
+            var splitPathWithoutLastElement = splitPath.Take(splitPath.Length - 1).ToArray();
+
+            splitPathWithoutLastElement[splitPathWithoutLastElement.Length - 1] =
+              splitPathWithoutLastElement[splitPathWithoutLastElement.Length - 1] + path;
+
+            this.DefaultPath = string.Join("/", splitPathWithoutLastElement);
         }
 
         private string ProcessNonHtmlFile()

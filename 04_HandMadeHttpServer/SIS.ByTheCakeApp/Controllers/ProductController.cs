@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Linq;
 using SIS.ByTheCakeApp.Common;
-using SIS.ByTheCakeApp.Infrastructure;
-using SIS.ByTheCakeApp.Models;
-using SIS.ByTheCakeApp.Services;
+using SIS.ByTheCakeData.Models;
+using SIS.ByTheCakeData.Services;
+using SIS.ByTheCakeData.ViewModels;
 using SIS.Http.HTTP;
 using SIS.Http.HTTP.Contracts;
+using SIS.Infrastructure;
 
 
 namespace SIS.ByTheCakeApp.Controllers
 {
     using System.Collections.Generic;
-    using ViewModels;
 
     public class ProductController : Controller
     {

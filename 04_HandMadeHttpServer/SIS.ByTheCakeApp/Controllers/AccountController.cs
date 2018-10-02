@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Extensions.Primitives;
 using SIS.ByTheCakeApp.Common;
-using SIS.ByTheCakeApp.Infrastructure;
-using SIS.ByTheCakeApp.Models;
-using SIS.ByTheCakeApp.Services;
-using SIS.ByTheCakeApp.Services.Contracts;
-using SIS.ByTheCakeApp.ViewModels;
+using SIS.ByTheCakeData.Models;
+using SIS.ByTheCakeData.Services;
+using SIS.ByTheCakeData.Services.Contracts;
+using SIS.ByTheCakeData.ViewModels;
 using SIS.Http.HTTP;
 using SIS.Http.HTTP.Contracts;
 using SIS.Http.HTTP.Response;
+using SIS.Infrastructure;
 
 namespace SIS.ByTheCakeApp.Controllers
 {
@@ -34,6 +32,8 @@ namespace SIS.ByTheCakeApp.Controllers
 
             this.SetAnonymousView();
 
+            this.ViewData["show-login"] = "none";
+
             base.SetWithoutErrorView();
 
             return this.FileViewResponse("Account/login");
@@ -56,6 +56,8 @@ namespace SIS.ByTheCakeApp.Controllers
             if (userViewModel==null)
             {
                 InsertErrorMessage(AppConstants.IncorrectUsernameOrPassword);
+
+                this.SetAnonymousView();
 
                 return this.FileViewResponse("Account/login");
             }

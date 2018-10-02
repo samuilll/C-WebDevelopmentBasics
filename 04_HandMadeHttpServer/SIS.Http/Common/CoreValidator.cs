@@ -13,15 +13,6 @@ namespace SIS.Http.Common
             }
         }
 
-        public static void ValidateObject(object entity)
-        {
-            var validationContext = new ValidationContext(entity);
-
-            Validator.ValidateObject(
-                entity,
-                validationContext,
-                validateAllProperties: true);
-        }
 
         public static void ThrowIfNullOrEmpty(string text, string name)
         {
