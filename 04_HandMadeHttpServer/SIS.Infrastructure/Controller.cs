@@ -2,7 +2,6 @@
 using SIS.Http.Enums;
 using SIS.Http.HTTP.Contracts;
 using SIS.Http.HTTP.Response;
-using SIS.Http.Views;
 
 namespace SIS.Infrastructure
 {

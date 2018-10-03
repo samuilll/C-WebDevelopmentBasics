@@ -20,7 +20,7 @@ namespace SIS.ByTheCakeData.Services
                 ImageUrl = pictureUrl
             };
 
-          bool success =   Validation.Validate(product);
+          bool success =   Validation.TryValidate(product);
 
             if (success)
             {

@@ -18,7 +18,7 @@ namespace SIS.StartUp
 
         public void Run()
         {
-            var app = new CakeApplication();
+            var app = new GameApplication();
 
            //app.InitializeDatabase();
 

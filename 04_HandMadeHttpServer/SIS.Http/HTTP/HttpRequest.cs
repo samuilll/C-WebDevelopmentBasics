@@ -72,7 +72,7 @@ namespace SIS.Http.HTTP
             string[] requestLine = requestLines[0].Trim()
            .Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
 
-            if (requestLine.Length != 3 || requestLine[2].ToUpper() != GlobalConstants.HttpOneProtocolFragment)
+            if (requestLine.Length != 3 || requestLine[2].ToUpper() != Constants.HttpOneProtocolFragment)
             {
                 throw new BadRequestException(BadRequestMessage);
             }
@@ -164,7 +164,7 @@ namespace SIS.Http.HTTP
                 this.HeaderCollection.Add(header);
             }
 
-            if (!this.HeaderCollection.ContainsKey(GlobalConstants.HostHeaderKey))
+            if (!this.HeaderCollection.ContainsKey(Constants.HostHeaderKey))
             {
                 throw new BadRequestException(BadRequestMessage);
             }

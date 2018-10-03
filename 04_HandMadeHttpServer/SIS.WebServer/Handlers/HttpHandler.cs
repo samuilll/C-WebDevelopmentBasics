@@ -5,7 +5,7 @@ using SIS.Http.Enums;
 using SIS.Http.HTTP;
 using SIS.Http.HTTP.Contracts;
 using SIS.Http.HTTP.Response;
-using SIS.Http.Views;
+using SIS.Infrastructure;
 using SIS.WebServer.Handlers.Contracts;
 using SIS.WebServer.Routing.Contracts;
 

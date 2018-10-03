@@ -23,8 +23,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SIS.ByTheCakeData\SIS.ByTheCakeData.csproj" />
-    <ProjectReference Include="..\SIS.Infrastructure\SIS.Infrastructure.csproj" />
-    <ProjectReference Include="..\SIS.WebServer\SIS.WebServer.csproj" />
   </ItemGroup>
 
 </Project>

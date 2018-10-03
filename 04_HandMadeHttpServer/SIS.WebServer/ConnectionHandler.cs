@@ -28,7 +28,7 @@ namespace SIS.WebServer
 
         public async Task ProcessRequestAsync()
         {
-            string httpRequest = await this.ReadRequest();
+                string httpRequest = await this.ReadRequest();
 
             if (httpRequest != null)
             {

@@ -5,7 +5,7 @@ namespace SIS.Infrastructure
 {
     public static class Validation
     {
-        public static bool Validate(object entity)
+        public static bool TryValidate(object entity)
         {
             var validationContext = new ValidationContext(entity);
 

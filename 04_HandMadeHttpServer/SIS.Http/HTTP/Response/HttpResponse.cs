@@ -26,7 +26,7 @@ namespace SIS.Http.HTTP.Response
         {
             var response = new StringBuilder();
 
-            response.AppendLine($"{GlobalConstants.HttpOneProtocolFragment} {(int)this.StatusCode} {this.StatusMessage}");
+            response.AppendLine($"{Constants.HttpOneProtocolFragment} {(int)this.StatusCode} {this.StatusMessage}");
 
             response.AppendLine(this.Headers.ToString());
 

@@ -1,13 +1,9 @@
-﻿using SIS.Http.Contracts;
-using SIS.Http.HTTP.Response;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using SIS.Http.Common;
+using SIS.Http.Contracts;
 
-namespace SIS.Http.Views
+namespace SIS.Infrastructure
 {
     public class FileView : IView
     {
