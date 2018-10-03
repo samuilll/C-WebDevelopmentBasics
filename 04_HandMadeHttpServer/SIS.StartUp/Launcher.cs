@@ -4,6 +4,7 @@ using SIS.WebServer;
 using SIS.WebServer.Routing;
 using SIS.WebServer.Routing.Contracts;
 using SIS.GameStoreApp;
+using SIS.WebServer.Contracts;
 
 namespace SIS.StartUp
 {
@@ -18,9 +19,9 @@ namespace SIS.StartUp
 
         public void Run()
         {
-            var app = new GameApplication();
+            IApplication app = new GameApplication();
 
-           //app.InitializeDatabase();
+            app.InitializeDatabase();
 
             IAppRouteConfig routeConfig = new AppRouteConfig();
 

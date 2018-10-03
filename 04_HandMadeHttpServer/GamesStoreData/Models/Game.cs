@@ -18,7 +18,6 @@ namespace GamesStoreData.Models
         [StringLength(maximumLength: 11, MinimumLength = 11)]
         public string Trailer { get; set; }
 
-        [Required]
         [UrlAttribute]
         public string ThumbnailUrl { get; set; }
 

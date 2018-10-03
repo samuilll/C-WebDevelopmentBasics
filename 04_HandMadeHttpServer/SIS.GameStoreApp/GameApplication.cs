@@ -1,4 +1,6 @@
 ﻿using System;
+using GamesStoreData;
+using Microsoft.EntityFrameworkCore;
 using SIS.GameStoreApp.Controllers;
 using SIS.WebServer.Contracts;
 using SIS.WebServer.Routing.Contracts;
@@ -47,8 +49,8 @@ namespace SIS.GameStoreApp
             );
 
             appRouteConfig.Get(
-                "/all-games",
-                req => new GameController().AllGames(req.Session)
+                "/admin-games",
+                req => new GameController().AdminGames(req.Session)
             );
 
             appRouteConfig.Get(
@@ -60,6 +62,14 @@ namespace SIS.GameStoreApp
                 "/add-game",
                 req => new GameController().AddGame(req)
             );
+        }
+
+        public void InitializeDatabase()
+        {
+            using (var db = new GameStoreDbContext())
+            {
+                db.Database.Migrate();
+            }
         }
     }
 }

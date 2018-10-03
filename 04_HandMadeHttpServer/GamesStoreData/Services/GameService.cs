@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using GamesStoreData.Models;
 using GamesStoreData.Models.ViewModels;
 using GamesStoreData.Services.Contracts;
@@ -19,7 +21,7 @@ namespace GamesStoreData.Services
         {
             this.mapper = autoMapper;
         }
-        public bool CreateGame(GameToAdViewModel gameView)
+        public bool CreateGame(GameToAddViewModel gameView)
         {
 
             bool success = Validation.TryValidate(gameView);
@@ -37,6 +39,36 @@ namespace GamesStoreData.Services
                 db.SaveChanges();
 
                 return true;
+            }
+        }
+
+        public List<GameViewModel> GetAdminGames()
+        {
+            using (GameStoreDbContext db = new GameStoreDbContext())
+            {
+                List<GameViewModel> games = db
+                                            .Games
+                                            .ProjectTo<GameViewModel>(mapper.ConfigurationProvider)
+                                            .ToList();
+
+                for (int i = 0; i < games.Count; i++)
+                {
+                    games[i].SequelNumber = i + 1;
+                }
+
+                return games;
+            }
+        }
+
+        public List<GameHomeViewModel> GetAllGames()
+        {
+            using (GameStoreDbContext db = new GameStoreDbContext())
+            {
+                List<GameHomeViewModel> games = db
+                                            .Games
+                                            .ProjectTo<GameHomeViewModel>(mapper.ConfigurationProvider)
+                                            .ToList();
+                return games;
             }
         }
     }

@@ -7,6 +7,10 @@ namespace GamesStoreData.Services.Contracts
 {
     public interface IGameService
     {
-        bool CreateGame(GameToAdViewModel gameView);
+        bool CreateGame(GameToAddViewModel gameView);
+
+        List<GameViewModel> GetAdminGames();
+
+        List<GameHomeViewModel> GetAllGames();
     }
 }

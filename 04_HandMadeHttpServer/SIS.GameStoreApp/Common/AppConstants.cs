@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SIS.ByTheCakeApp.Common
+namespace SIS.GameStoreApp.Common
 {
-   static class AppConstants
+  public static class AppConstants
    {
+        public const string IncorrectGameInput = "Incorrect game input!";
 
-
+        public const string GameSuccesfullAdded = "Game successfully added!";
     }
 }

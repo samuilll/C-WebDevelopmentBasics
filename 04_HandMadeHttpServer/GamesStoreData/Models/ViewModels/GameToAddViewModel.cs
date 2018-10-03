@@ -6,7 +6,7 @@ using GamesStoreData.Attributes;
 
 namespace GamesStoreData.Models.ViewModels
 {
-   public class GameToAdViewModel
+   public class GameToAddViewModel
     {
         [Required]
         [StringLength(maximumLength: 100, MinimumLength = 3)]
@@ -17,7 +17,6 @@ namespace GamesStoreData.Models.ViewModels
         [StringLength(maximumLength: 11, MinimumLength = 11)]
         public string Trailer { get; set; }
 
-        [Required]
         [Url]
         public string ThumbnailUrl { get; set; }
 

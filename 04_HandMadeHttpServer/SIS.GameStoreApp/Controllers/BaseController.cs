@@ -16,9 +16,12 @@ namespace SIS.GameStoreApp.Controllers
 
         protected BaseController()
         {
-             serviceProvider = ConfigureServices();
+           serviceProvider = ConfigureServices();
 
             mapper = serviceProvider.GetService<IMapper>();
+
+            this.ViewData["show-game-added"] = "none";
+            this.ViewData["show-error"] = "none";
         }
 
         private static IServiceProvider ConfigureServices()
