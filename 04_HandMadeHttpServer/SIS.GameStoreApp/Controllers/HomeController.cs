@@ -25,31 +25,91 @@ namespace SIS.GameStoreApp.Controllers
 
             bool isLoggedIn = req.Session.IsAuthenticated();
 
-            if (req.FormData.Count==0)
+
+            bool isAdmin = isLoggedIn
+                           ?
+                           req.Session.Get<LoginViewModel>(SessionStore.CurrentUserKey).IsAdmin
+                           :
+                           false;
+
+            List<GameHomeViewModel> games;
+
+            if (req.UrlParameters.Count == 0
+                || req.UrlParameters["filter"] == "All")
             {
-                List<GameHomeViewModel> games = this.gameService.GetAllGames();
-
-                StringBuilder sb = new StringBuilder();
-
-                foreach (GameHomeViewModel game in games)
-                {
-                    sb.Append("");
-                }
-            }
-
-            if (!isLoggedIn)
-            {
-                return this.FileViewResponse("Home/guest-home");
-            }
-            LoginViewModel user = req.Session.Get<LoginViewModel>(SessionStore.CurrentUserKey);
-
-            if (user.IsAdmin)
-            {
-                return this.FileViewResponse("Home/admin-home");
+                games = this.gameService.GetAllGames();
             }
             else
             {
+                games = this.gameService.GetOwnedGames(req.Session.Get<LoginViewModel>(SessionStore.CurrentUserKey));
+            }
+
+            StringBuilder sb = new StringBuilder();
+
+            CreateHtmlAllGamesString(isAdmin, games, sb);
+
+            this.ViewData["games"] = sb.ToString();
+
+            LoginViewModel user = req.Session.Get<LoginViewModel>(SessionStore.CurrentUserKey);
+
+            if (isAdmin)
+            {
+                return this.FileViewResponse("Home/admin-home");
+            }
+             if(isLoggedIn)
+            {
                 return this.FileViewResponse("Home/user-home");
+            }
+          
+                return this.FileViewResponse("Home/guest-home");
+            
+        }
+
+        private static void CreateHtmlAllGamesString(bool isAdmin, List<GameHomeViewModel> games, StringBuilder sb)
+        {
+            for (int i = 0; i < games.Count; i++)
+            {
+                GameHomeViewModel game = games[i];
+
+                bool hasCardGroupOpen = i % 3 == 0;
+                bool hasCardGroupClosed = i % 3 == 2;
+
+                if (hasCardGroupOpen)
+                {
+                    sb.Append("<div class=\"card-group\">");
+                }
+
+                sb.Append("<div class=\"card col-4 thumbnail\">" +
+                          "<img " +
+                          "class=\"card-image-top img-fluid img-thumbnail\"" +
+                          $"onerror=\"this.src='https://i.ytimg.com/vi/{game.Trailer}/maxresdefault.jpg';\"" +
+                          $"src=\"{game.ThumbnailUrl}\">" +
+                          "<div class=\"card-body\">" +
+                          $"<h4 class=\"card-title\">{game.Title}</h4>" +
+                          $"<p class=\"card-text\"><strong>Price</strong> - {game.Price}&euro;</p>" +
+                          $"<p class=\"card-text\"><strong>Size</strong> - {game.Size} GB</p>" +
+                          $"<p class=\"card-text\">{game.Description}</p>" +
+                          "</div>" +
+                          "<div class=\"card-footer\">");
+                if (isAdmin)
+                {
+                    sb.Append(
+                        "<a class=\"card-button btn btn-warning\" name=\"edit\" href=\"#\">Edit</a>" +
+                        "<a class=\"card-button btn btn-danger\" name=\"delete\" href=\"#\">Delete</a>");
+                }
+
+                sb.Append(
+                    "<a class=\"card-button btn btn-outline-primary\" name=\"info\" href=\"#\">Info</a>" +
+                    "<a class=\"card-button btn btn-primary\" name=\"buy\" href=\"#\">Buy</a>" +
+                    "</div>" +
+                    "</div>"
+                         );
+
+                if (hasCardGroupClosed)
+                {
+                    sb.Append("</div>");
+
+                }
             }
         }
     }

@@ -71,5 +71,41 @@ namespace GamesStoreData.Services
                 return games;
             }
         }
+
+        public List<GameHomeViewModel> GetOwnedGames(LoginViewModel loginViewModel)
+        {
+            using (GameStoreDbContext db = new GameStoreDbContext())
+            {
+
+                User user = db
+                    .Users
+                    .Include(u => u.Orders)
+                    .ThenInclude(o => o.Games)
+                    .ThenInclude(og => og.Game)
+                    .Where(u => u.Email == loginViewModel.Email)
+                    .FirstOrDefault();
+
+                ICollection<Order> orders = user.Orders;
+
+                List<GameHomeViewModel> games = new List<GameHomeViewModel>();
+
+                foreach (Order order in orders)
+                {
+                    List<Game> gamesToAdd = order
+                        .Games
+                        .Select(og => og.Game)
+                        .ToList();
+
+                    foreach (Game gameToAdd in gamesToAdd)
+                    {
+                        GameHomeViewModel gameModel = mapper.Map<GameHomeViewModel>(gameToAdd);
+
+                        games.Add(gameModel);
+                    }
+                }
+                
+              return  games;
+            }
+        }
     }
 }

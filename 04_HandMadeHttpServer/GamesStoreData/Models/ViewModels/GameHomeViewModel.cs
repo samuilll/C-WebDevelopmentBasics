@@ -16,5 +16,6 @@ namespace GamesStoreData.Models.ViewModels
 
         public decimal Size { get; set; }
 
+        public string Trailer { get; set; }
     }
 }

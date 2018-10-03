@@ -12,5 +12,7 @@ namespace GamesStoreData.Services.Contracts
         List<GameViewModel> GetAdminGames();
 
         List<GameHomeViewModel> GetAllGames();
+
+        List<GameHomeViewModel> GetOwnedGames(LoginViewModel loginViewModel);
     }
 }
