@@ -13,7 +13,7 @@ namespace SIS.GameStoreApp.Common
         {
             CreateMap<RegisterViewModel, User>();
 
-            CreateMap<GameToAddViewModel, Game>();
+            CreateMap<GameToAddOrEditViewModel, Game>().ReverseMap();
 
             CreateMap<Game,GameViewModel>();
 

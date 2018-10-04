@@ -21,7 +21,7 @@ namespace GamesStoreData.Services
         {
             this.mapper = autoMapper;
         }
-        public bool CreateGame(GameToAddViewModel gameView)
+        public bool CreateGame(GameToAddOrEditViewModel gameView)
         {
 
             bool success = Validation.TryValidate(gameView);
@@ -105,6 +105,39 @@ namespace GamesStoreData.Services
                 }
                 
               return  games;
+            }
+        }
+
+        public GameToAddOrEditViewModel GetById(int id)
+        {
+            using (GameStoreDbContext db = new GameStoreDbContext())
+            {
+                Game game = db
+                    .Games
+                    .FirstOrDefault(g => g.Id == id);
+
+                if (game==null)
+                {
+                    return null;        
+                }
+
+                GameToAddOrEditViewModel gameModel = this.mapper.Map<GameToAddOrEditViewModel>(game);
+
+                return gameModel;
+            }
+        }
+
+        public void EditGame(GameToAddOrEditViewModel gameModel)
+        {
+            using (GameStoreDbContext db =new GameStoreDbContext())
+            {
+                Game gameToEdit = db
+                    .Games
+                    .Single(g => g.Id == gameModel.Id);
+
+                gameToEdit = this.mapper.Map<Game>(gameModel);
+
+                db.SaveChanges();
             }
         }
     }

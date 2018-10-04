@@ -94,8 +94,8 @@ namespace SIS.GameStoreApp.Controllers
                 if (isAdmin)
                 {
                     sb.Append(
-                        "<a class=\"card-button btn btn-warning\" name=\"edit\" href=\"#\">Edit</a>" +
-                        "<a class=\"card-button btn btn-danger\" name=\"delete\" href=\"#\">Delete</a>");
+                        $"<a class=\"card-button btn btn-warning\" name=\"edit\" href=\"edit-game?id={game.Id}\">Edit</a>" +
+                        $"<a class=\"card-button btn btn-danger\" name=\"delete\" href=\"delete-game?id={game.Id}\">Delete</a>");
                 }
 
                 sb.Append(

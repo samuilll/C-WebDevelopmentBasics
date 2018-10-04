@@ -2,6 +2,7 @@
 using GamesStoreData;
 using Microsoft.EntityFrameworkCore;
 using SIS.GameStoreApp.Controllers;
+using SIS.Http.HTTP.Contracts;
 using SIS.WebServer.Contracts;
 using SIS.WebServer.Routing.Contracts;
 
@@ -61,6 +62,16 @@ namespace SIS.GameStoreApp
             appRouteConfig.Post(
                 "/add-game",
                 req => new GameController().AddGame(req)
+            );
+
+            appRouteConfig.Get(
+                "/edit-game/{(?<id>[0-9]+)}",
+                req => new GameController().EditGame(req.Session,req.UrlParameters["id"])
+            );
+
+            appRouteConfig.Post(
+                "/edit-game/{(?<id>[0-9]+)}",
+                req => new GameController().EditGame(req.FormData)
             );
         }
 

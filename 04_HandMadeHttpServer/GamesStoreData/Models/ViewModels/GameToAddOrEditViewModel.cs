@@ -6,8 +6,11 @@ using GamesStoreData.Attributes;
 
 namespace GamesStoreData.Models.ViewModels
 {
-   public class GameToAddViewModel
+   public class GameToAddOrEditViewModel
     {
+
+        public int Id { get; set; }
+
         [Required]
         [StringLength(maximumLength: 100, MinimumLength = 3)]
         [GameTitle]

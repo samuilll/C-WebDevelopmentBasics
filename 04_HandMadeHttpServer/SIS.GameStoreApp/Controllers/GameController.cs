@@ -79,6 +79,7 @@ namespace SIS.GameStoreApp.Controllers
             return this.FileViewResponse("Game/add-game");
         }
 
+
         public IHttpResponse AddGame(IHttpRequest req)
         {
             string title = req.FormData["title"];
@@ -89,7 +90,7 @@ namespace SIS.GameStoreApp.Controllers
             DateTime date = DateTime.ParseExact(req.FormData["date"], "yyyy-MM-dd", CultureInfo.InvariantCulture);
             decimal price = decimal.Parse(req.FormData["price"]);
 
-            GameToAddViewModel gameModel = new GameToAddViewModel()
+            GameToAddOrEditViewModel gameModel = new GameToAddOrEditViewModel()
             {
                 Title =title,
                 Trailer=trailer,
@@ -115,5 +116,49 @@ namespace SIS.GameStoreApp.Controllers
 
             return this.FileViewResponse("Game/add-game");
         }
+
+       public IHttpResponse EditGame(IHttpSession session, string urlParameter)
+       {
+
+           if (!session.IsAuthenticated()|| !session.Get<LoginViewModel>(SessionStore.CurrentUserKey).IsAdmin)
+           {
+               return new RedirectResponse("/");
+           }
+
+           int id = int.Parse(urlParameter);
+
+           GameToAddOrEditViewModel game = this.gameService.GetById(id);
+
+           this.ViewData["id"] = game.Id.ToString();
+           this.ViewData["title"] = game.Title;
+           this.ViewData["description"] = game.Description;
+           this.ViewData["thumbnail"] = game.ThumbnailUrl!=null?game.ThumbnailUrl:string.Empty;
+           this.ViewData["trailer"] = game.Trailer;
+           this.ViewData["price"] = game.Price.ToString("f2");
+           this.ViewData["size"] = game.Size.ToString("f1");
+           this.ViewData["date"] = game.ReleaseDate.ToString("dd-MM-yyyy");
+
+           return this.FileViewResponse("Game/edit-game");
+       }
+        
+        
+       public IHttpResponse EditGame(Dictionary<string, string> formData)
+       {
+           GameToAddOrEditViewModel game = new GameToAddOrEditViewModel()
+           {
+               Id = int.Parse(formData["id"]),
+               Title = formData["title"],
+               Description = formData["description"],
+               ThumbnailUrl = this.ViewData["thumbnail"],
+               Trailer = formData["trailer"],
+               Price = decimal.Parse(formData["price"]),
+               Size = decimal.Parse(formData["size"]),
+               ReleaseDate = DateTime.ParseExact(formData["date"], "yyyy-MM-dd", CultureInfo.InvariantCulture)
+           };
+
+           this.gameService.EditGame(game);
+
+           return new RedirectResponse("/");
+       }
     }
 }
