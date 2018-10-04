@@ -71,7 +71,7 @@ namespace SIS.GameStoreApp
 
             appRouteConfig.Post(
                 "/edit-game/{(?<id>[0-9]+)}",
-                req => new GameController().EditGame(req.FormData)
+                req => new GameController().EditGame(req.FormData,req.UrlParameters)
             );
         }
 

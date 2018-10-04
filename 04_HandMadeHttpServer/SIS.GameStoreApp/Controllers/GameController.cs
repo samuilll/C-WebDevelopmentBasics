@@ -136,20 +136,20 @@ namespace SIS.GameStoreApp.Controllers
            this.ViewData["trailer"] = game.Trailer;
            this.ViewData["price"] = game.Price.ToString("f2");
            this.ViewData["size"] = game.Size.ToString("f1");
-           this.ViewData["date"] = game.ReleaseDate.ToString("dd-MM-yyyy");
+           this.ViewData["date"] = game.ReleaseDate.ToString("MM-dd-yyyy");
 
            return this.FileViewResponse("Game/edit-game");
        }
         
         
-       public IHttpResponse EditGame(Dictionary<string, string> formData)
+       public IHttpResponse EditGame(Dictionary<string, string> formData, Dictionary<string, string> urlParameters)
        {
            GameToAddOrEditViewModel game = new GameToAddOrEditViewModel()
            {
-               Id = int.Parse(formData["id"]),
+               Id = int.Parse(urlParameters["id"]),
                Title = formData["title"],
                Description = formData["description"],
-               ThumbnailUrl = this.ViewData["thumbnail"],
+               ThumbnailUrl = formData["thumbnail"],
                Trailer = formData["trailer"],
                Price = decimal.Parse(formData["price"]),
                Size = decimal.Parse(formData["size"]),

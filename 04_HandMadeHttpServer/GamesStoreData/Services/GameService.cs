@@ -129,13 +129,26 @@ namespace GamesStoreData.Services
 
         public void EditGame(GameToAddOrEditViewModel gameModel)
         {
+            if (!Validation.TryValidate(gameModel))
+            {
+                return;
+            }
+
             using (GameStoreDbContext db =new GameStoreDbContext())
             {
                 Game gameToEdit = db
                     .Games
                     .Single(g => g.Id == gameModel.Id);
 
-                gameToEdit = this.mapper.Map<Game>(gameModel);
+                gameToEdit.Price = gameModel.Price;
+                gameToEdit.Description = gameModel.Description;
+                gameToEdit.ThumbnailUrl = gameModel.ThumbnailUrl;
+                gameToEdit.Size = gameModel.Size;
+                gameToEdit.Trailer = gameModel.Trailer;
+                gameToEdit.ReleaseDate = gameModel.ReleaseDate;
+                gameToEdit.Title = gameModel.Title;
+
+                db.Games.Update(gameToEdit);
 
                 db.SaveChanges();
             }
