@@ -41,12 +41,12 @@ namespace SIS.GameStoreApp.Controllers
             }
             else
             {
-                games = this.gameService.GetOwnedGames(req.Session.Get<LoginViewModel>(SessionStore.CurrentUserKey));
+                games = this.gameService.GetOwnedGames(req.Session.Get<LoginViewModel>(SessionStore.CurrentUserKey).Email);
             }
 
             StringBuilder sb = new StringBuilder();
 
-            CreateHtmlAllGamesString(isAdmin, games, sb);
+            CreateHtmlAllGamesString(isLoggedIn,isAdmin, games, sb);
 
             this.ViewData["games"] = sb.ToString();
 
@@ -65,7 +65,8 @@ namespace SIS.GameStoreApp.Controllers
             
         }
 
-        private static void CreateHtmlAllGamesString(bool isAdmin, List<GameHomeViewModel> games, StringBuilder sb)
+        private static void CreateHtmlAllGamesString(bool isLoggedIn, bool isAdmin, List<GameHomeViewModel> games,
+            StringBuilder sb)
         {
             for (int i = 0; i < games.Count; i++)
             {
@@ -98,12 +99,25 @@ namespace SIS.GameStoreApp.Controllers
                         $"<a class=\"card-button btn btn-danger\" name=\"delete\" href=\"delete-game/{game.Id}\">Delete</a>");
                 }
 
-                sb.Append(
-                    "<a class=\"card-button btn btn-outline-primary\" name=\"info\" href=\"#\">Info</a>" +
-                    "<a class=\"card-button btn btn-primary\" name=\"buy\" href=\"#\">Buy</a>" +
-                    "</div>" +
-                    "</div>"
-                         );
+
+                if (isLoggedIn)
+                {
+                    sb.Append(
+                        $"<a class=\"card-button btn btn-outline-primary\" name=\"info\" href=\"/game-details/{game.Id}\">Info</a>" +
+                        $"<a class=\"card-button btn btn-primary\" name=\"buy\" href=\"/buy-game/{game.Id}\">Buy</a>" +
+                        "</div>" +
+                        "</div>"
+                    );
+                }
+                else
+                {
+                    sb.Append(
+                        $"<a class=\"card-button btn btn-outline-primary\" name=\"info\" href=\"/game-details/{game.Id}\">Info</a>" +
+                        $"<a class=\"card-button btn btn-primary\" name=\"buy\" href=\"/login\">Buy</a>" +
+                        "</div>" +
+                        "</div>"
+                    );
+                }
 
                 if (hasCardGroupClosed)
                 {

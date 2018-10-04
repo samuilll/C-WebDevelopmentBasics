@@ -19,7 +19,9 @@ namespace SIS.GameStoreApp.Common
 
             CreateMap<Game, GameHomeViewModel>()
                 .ForMember(dest => dest.Description,
-                           m => m.MapFrom(src => TakeShortDescription(src.Description)));         
+                           m => m.MapFrom(src => TakeShortDescription(src.Description)));
+
+            CreateMap<Game, GameInCartViewModel>();
         }
 
         private string TakeShortDescription(string description)

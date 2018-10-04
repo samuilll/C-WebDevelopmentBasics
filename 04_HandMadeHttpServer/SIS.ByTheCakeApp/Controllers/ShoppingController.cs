@@ -40,7 +40,7 @@ namespace SIS.ByTheCakeApp.Controllers
                 return this.FileViewResponse("Home/index");
             }
 
-            var shoppingCard = req.Session.Get<ShoppingCard>(SessionStore.ShoppingCardKey);
+            var shoppingCard = req.Session.Get<ShoppingCard>(SessionStore.ShoppingCartKey);
 
             shoppingCard.Add(productId);
 
@@ -82,7 +82,7 @@ namespace SIS.ByTheCakeApp.Controllers
 
         private static List<int> GetProductIds(IHttpRequest req)
         {
-            return req.Session.Get<ShoppingCard>(SessionStore.ShoppingCardKey).ProductIds.ToList();
+            return req.Session.Get<ShoppingCard>(SessionStore.ShoppingCartKey).ProductIds.ToList();
         }
 
         public IHttpResponse ShowCompleteOrder(IHttpRequest req)
@@ -120,7 +120,7 @@ namespace SIS.ByTheCakeApp.Controllers
 
             this.shoppingService.CreateOrder(productIds,userId);
 
-            req.Session.Get<ShoppingCard>(SessionStore.ShoppingCardKey).Clear();
+            req.Session.Get<ShoppingCard>(SessionStore.ShoppingCartKey).Clear();
 
             return this.FileViewResponse("Shopping/success");
         }

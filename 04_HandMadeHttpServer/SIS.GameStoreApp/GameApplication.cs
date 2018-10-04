@@ -73,6 +73,33 @@ namespace SIS.GameStoreApp
                 "/edit-game/{(?<id>[0-9]+)}",
                 req => new GameController().EditGame(req.FormData,req.UrlParameters)
             );
+
+            appRouteConfig.Get(
+                "/delete-game/{(?<id>[0-9]+)}",
+                req => new GameController().DeleteGame(req.Session, req.UrlParameters["id"])
+            );
+
+            appRouteConfig.Post(
+                "/delete-game/{(?<id>[0-9]+)}",
+                req => new GameController().DeleteGame(req.FormData, req.UrlParameters)
+            );
+
+            appRouteConfig.Get(
+                "/game-details/{(?<id>[0-9]+)}",
+                req => new GameController().Details(req)
+            );
+
+            appRouteConfig.Get(
+                "/buy-game/{(?<id>[0-9]+)}",
+                req => new CartController().Buy(req)
+            );
+
+            appRouteConfig.Get(
+                "/cart",
+                req => new CartController().ShowGames(req)
+            );
+
+
         }
 
         public void InitializeDatabase()

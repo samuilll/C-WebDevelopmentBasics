@@ -154,7 +154,7 @@ namespace SIS.ByTheCakeApp.Controllers
         private void LogInUser(IHttpRequest req, ProfileViewModel user)
         {
             req.Session.Add(SessionStore.CurrentUserKey, user);
-            req.Session.Add(SessionStore.ShoppingCardKey, new ShoppingCard());
+            req.Session.Add(SessionStore.ShoppingCartKey, new ShoppingCard());
         }
     }
 }

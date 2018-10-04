@@ -13,10 +13,14 @@ namespace GamesStoreData.Services.Contracts
 
         List<GameHomeViewModel> GetAllGames();
 
-        List<GameHomeViewModel> GetOwnedGames(LoginViewModel loginViewModel);
+        List<GameHomeViewModel> GetOwnedGames(string email);
 
         GameToAddOrEditViewModel GetById(int id);
 
         void EditGame(GameToAddOrEditViewModel game);
+
+        void Delete(int id);
+
+        bool GameIsOwnedByYou(int id,string email);
     }
 }

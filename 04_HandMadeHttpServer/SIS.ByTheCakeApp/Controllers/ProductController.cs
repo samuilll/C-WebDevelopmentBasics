@@ -66,7 +66,7 @@ namespace SIS.ByTheCakeApp.Controllers
             this.ViewData["show-products"] = "none";
             this.ViewData["search-term"] = "Search products...";
 
-            var shoppingCard = req.Session.Get<ShoppingCard>(SessionStore.ShoppingCardKey);
+            var shoppingCard = req.Session.Get<ShoppingCard>(SessionStore.ShoppingCartKey);
 
             var productsCount = shoppingCard.ProductIds.Count;
 

@@ -200,7 +200,7 @@ namespace SIS.Http.HTTP
 
                 if (queryKvp.Length != 2)
                 {
-                    return;
+                    continue;
                 }
 
                 var queryKey = WebUtility.UrlDecode(queryKvp[0]);

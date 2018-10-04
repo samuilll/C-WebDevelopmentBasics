@@ -72,7 +72,7 @@ namespace GamesStoreData.Services
             }
         }
 
-        public List<GameHomeViewModel> GetOwnedGames(LoginViewModel loginViewModel)
+        public List<GameHomeViewModel> GetOwnedGames(string email)
         {
             using (GameStoreDbContext db = new GameStoreDbContext())
             {
@@ -82,7 +82,7 @@ namespace GamesStoreData.Services
                     .Include(u => u.Orders)
                     .ThenInclude(o => o.Games)
                     .ThenInclude(og => og.Game)
-                    .Where(u => u.Email == loginViewModel.Email)
+                    .Where(u => u.Email == email)
                     .FirstOrDefault();
 
                 ICollection<Order> orders = user.Orders;
@@ -152,6 +152,29 @@ namespace GamesStoreData.Services
 
                 db.SaveChanges();
             }
+        }
+
+        public void Delete(int id)
+        {
+            using (GameStoreDbContext db = new GameStoreDbContext())
+            {
+                Game game = db
+                    .Games.SingleOrDefault(g => g.Id == id);
+
+                if (game==null)
+                {
+                    return;
+                }
+
+                db.Games.Remove(game);
+
+                db.SaveChanges();
+            }
+        }
+
+        public bool GameIsOwnedByYou(int id, string email)
+        {
+            return this.GetOwnedGames(email).Any(g => g.Id == id);
         }
     }
 }

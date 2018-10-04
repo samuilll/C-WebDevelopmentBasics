@@ -6,6 +6,8 @@ namespace GamesStoreData.Models.ViewModels
 {
    public class GameViewModel
     {
+        public int Id { get; set; }
+
         public int SequelNumber { get; set; }
 
         public string Title { get; set; }
