@@ -26,7 +26,7 @@ namespace SIS.WebServer.Handlers
             {
                 var currentPath = context.Request.Path;
 
-                var loginPath = "/login";
+                var loginPath = "/Users/login";
 
                 var anonymousPaths = this.serverRouteConfig.AppRouteConfig.AnonymousPaths.ToList();
 
@@ -54,15 +54,22 @@ namespace SIS.WebServer.Handlers
                 }
 
                 var method = context.Request.RequestMethod;
-
                 var registeredRoutes = this.serverRouteConfig.Routes[method];
 
                 foreach (var registeredRoute in registeredRoutes)
                 {
+                    string url = context.Request.Url;
                     string pattern = registeredRoute.Key;
+                   
                     var routingContext = registeredRoute.Value;
+
+                    if (pattern.Contains("?"))
+                    {
+                        pattern = ReplaceFirstLetterOnlyIfItsNotOnlyOne(pattern, "?", @"\?");
+                    }
+
                     Regex regex = new Regex(pattern);
-                    Match match = regex.Match(currentPath);
+                    Match match = regex.Match(url);
 
                     if (!match.Success)
                     {
@@ -78,11 +85,28 @@ namespace SIS.WebServer.Handlers
                 }
             }
             catch (Exception ex)
-            {
+           {
                 return new InternalServerErrorResponse(ex);
             }
 
             return new NotFoundResponse();
+        }
+
+        
+    
+        private string ReplaceFirstLetterOnlyIfItsNotOnlyOne(string text, string textToReplace, string replace)
+        {
+            int pos = text.IndexOf(textToReplace);
+
+            if (!text.Substring(pos+1,text.Length-pos-1).Contains(textToReplace))
+            {
+                return text;
+            }
+            if (pos < 0)
+            {
+                return text;
+            }
+            return text.Substring(0, pos) + replace + text.Substring(pos + textToReplace.Length);
         }
 
     }

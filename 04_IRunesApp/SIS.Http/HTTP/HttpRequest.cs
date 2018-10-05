@@ -186,6 +186,7 @@ namespace SIS.Http.HTTP
 
         private void ParseQuery(string query, Dictionary<string, string> dict)
         {
+
             if (!query.Contains('='))
             {
                 return;
