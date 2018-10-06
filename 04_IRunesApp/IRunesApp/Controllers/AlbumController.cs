@@ -121,7 +121,7 @@ namespace IRunesApp.Controllers
 
             this.ViewData["cover"] = album.Cover;
             this.ViewData["albumId"] = album.Id;
-            this.ViewData["album-price"] = album.Price.ToString("f2");
+            this.ViewData["album-price"] = $"${ album.Price.ToString("f2")}";
             this.ViewData["album-name"] = album.Name;
             this.ViewData["all-tracks"] = sb.ToString();
 

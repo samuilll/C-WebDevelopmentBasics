@@ -46,6 +46,9 @@ namespace IRunesApp.Controllers
             if (username==null)
             {
                 this.InsertErrorMessage(AppConstants.LogInError);
+
+                this.SetGuestView();
+
                 return this.FileViewResponse("/Users/login");
             }
             

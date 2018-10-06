@@ -22,7 +22,7 @@ namespace IRunesApp.Common
                         new Album()
                         {
                             Id = Guid.NewGuid().ToString(),
-                            Name = "",
+                            Name = "Play the game",
                             Cover = "https://images.eil.com/large_image/QUEEN_PLAY%2BTHE%2BGAME-291209.jpg",
                         }
                     };
@@ -111,6 +111,9 @@ namespace IRunesApp.Common
                             }
                         }
                     };
+
+            albums[0].AlbumTracks = firstAlbumTracks;
+            albums[1].AlbumTracks = secondAlbumTracks;
 
             db.Albums.AddRange(albums);
             db.SaveChanges();
