@@ -21,7 +21,7 @@ namespace IRunes.Domain.Models
         [Required]
         public string Cover { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        [NotMapped]
         public decimal Price => CalculatePrice(this.AlbumTracks);
 
         public virtual ICollection<AlbumTrack> AlbumTracks { get; set; }
@@ -35,7 +35,7 @@ namespace IRunes.Domain.Models
                 return price;
             }
 
-            price -= 13 * 100 / price;
+            price -= 13 * price / 100;
 
             return price;
         }

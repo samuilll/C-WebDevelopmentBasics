@@ -67,15 +67,15 @@ namespace IRunesApp
                 req => new AlbumController().Details(req.Session,req.UrlParameters["albumId"]));
 
             appRouteConfig.Get(
-                "/Tracks/create?albumId={(?<id>.+)}",
+                "/Tracks/create?albumId={(?<albumId>.+)}",
                 req => new TrackController().Create(req.UrlParameters));
 
             appRouteConfig.Post(
-                "/Tracks/create?albumId={(?<id>.+)}",
+                "/Tracks/create?albumId={(?<albumId>.+)}",
                 req => new TrackController().Create(req));
 
             appRouteConfig.Get(
-                "/Tracks/details?albumId={(?<id>[A-Za-z0-9]+)}&trackId={(?<id>[A-Za-z0-9]+)}}",
+                "/Tracks/details?albumId={(?<albumId>[A-Za-z0-9-]+)}&trackId={(?<trackId>[A-Za-z0-9-]+)}}",
                 req => new TrackController().Details(req));
 
         }

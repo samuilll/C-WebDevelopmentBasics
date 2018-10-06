@@ -12,7 +12,7 @@ namespace IRunesServices.Contracts
 
        List<Album> GetAll();
 
-       Album GetById(string id);
+       AlbumDetailsView GetById(string id);
 
        List<Track> GetAllTracks(string album);
    }

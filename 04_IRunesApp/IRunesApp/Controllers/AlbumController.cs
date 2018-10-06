@@ -79,7 +79,7 @@ namespace IRunesApp.Controllers
 
             foreach (Album album in albums)
             {
-                sb.Append($"<p><a href =\"/Albums/details?albumId={album.Id}\">{album.Name}</a></p>");
+                sb.Append($"<li><a href =\"/Albums/details?albumId={album.Id}\">{album.Name}</a></li>");
             }
 
             this.ViewData["all-albums"] = sb.ToString();
@@ -94,7 +94,7 @@ namespace IRunesApp.Controllers
                 return new RedirectResponse("/");
             }
 
-            Album album = this.albumService.GetById(id);
+            AlbumDetailsView album = this.albumService.GetById(id);
 
             if (album==null)
             {
@@ -115,11 +115,16 @@ namespace IRunesApp.Controllers
                 {
                     Track track = tracks[i];
 
-                    sb.Append($"<li>{i}. <a href= \"/Tracks/details?albumId={album.Id}&trackId={track.Id}\">{track.Name}</a></li>");
+                    sb.Append($"<li>{i+1}. <a href= \"/Tracks/details?albumId={album.Id}&trackId={track.Id}\">{track.Name}</a></li>");
                 }
             }
 
+            this.ViewData["cover"] = album.Cover;
+            this.ViewData["albumId"] = album.Id;
+            this.ViewData["album-price"] = album.Price.ToString("f2");
+            this.ViewData["album-name"] = album.Name;
             this.ViewData["all-tracks"] = sb.ToString();
+
             this.SetLoggedInView();
 
             return this.FileViewResponse("/Albums/details");

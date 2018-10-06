@@ -39,9 +39,10 @@ namespace SIS.WebServer.Handlers
                 const string JsFolder = "/js";
 
 
+
                 var allowedFolders = new string[] { StylesFolder,ScriptsFolder,CssFolder,JsFolder};
 
-                if (allowedFolders.Any(folder => currentPath.StartsWith(folder)))
+                if (allowedFolders.Any(folder => currentPath.Contains(folder)))
                 {
                     var extension = currentPath.Substring(currentPath.LastIndexOf('.')+1,currentPath.Length-currentPath.LastIndexOf('.')-1);
 

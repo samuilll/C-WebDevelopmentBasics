@@ -45,13 +45,21 @@ namespace IRunesServices
             }
         }
 
-        public Album GetById(string id)
+        public AlbumDetailsView GetById(string id)
         {
             using (RunesDbContext db = new RunesDbContext())
             {
-                return db
+                Album album =  db
                     .Albums
                     .SingleOrDefault(a => a.Id == id);
+
+                return new AlbumDetailsView()
+                {
+                    Price = album.Price,
+                    Name = album.Name,
+                    Id = album.Id,
+                    Cover = album.Cover
+                };
             }
         }
 
