@@ -47,7 +47,7 @@ namespace SIS.WebServer
                     Console.WriteLine($"-----REQUEST-----");
                     Console.WriteLine(httpRequest);
                     Console.WriteLine($"-----RESPONSE-----");
-                    Console.WriteLine(httpResponse);
+                    Console.WriteLine(httpResponse.ToBaseString());
                     Console.WriteLine();
                 }
 

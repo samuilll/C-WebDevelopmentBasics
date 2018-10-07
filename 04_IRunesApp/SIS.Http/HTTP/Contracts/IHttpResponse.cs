@@ -9,5 +9,8 @@ namespace SIS.Http.HTTP.Contracts
         IHttpHeaderCollection Headers { get; }
 
         IHttpCookieCollection Cookies { get; }
+
+        string ToBaseString();
+
     }
 }   
