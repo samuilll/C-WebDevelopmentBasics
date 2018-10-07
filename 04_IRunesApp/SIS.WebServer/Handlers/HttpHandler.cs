@@ -37,14 +37,16 @@ namespace SIS.WebServer.Handlers
                 const string CssFolder = "/css";
 
                 const string JsFolder = "/js";
-
-
-
+                
                 var allowedFolders = new string[] { StylesFolder,ScriptsFolder,CssFolder,JsFolder};
 
                 if (allowedFolders.Any(folder => currentPath.Contains(folder)))
                 {
-                    var extension = currentPath.Substring(currentPath.LastIndexOf('.')+1,currentPath.Length-currentPath.LastIndexOf('.')-1);
+                    int lastIndexDot = currentPath.LastIndexOf('.');
+
+                    var extension = currentPath.Substring(lastIndexDot,currentPath.Length-lastIndexDot);
+
+                    currentPath = currentPath.Substring(1, currentPath.Length - extension.Length-1);
 
                     return new TextPlainResponse(HttpStatusCode.OK, new FileView(currentPath,extension));
                 }

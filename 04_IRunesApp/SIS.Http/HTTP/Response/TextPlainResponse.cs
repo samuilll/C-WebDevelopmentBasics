@@ -20,9 +20,13 @@ namespace SIS.Http.HTTP.Response
         }
 
         public override string ToString()
-        {
-            
+        {           
             return $"{base.ToString()} {this.view.View()}";
+        }
+
+        public override string ToBaseString()
+        {
+            return base.ToString();
         }
     }
 }

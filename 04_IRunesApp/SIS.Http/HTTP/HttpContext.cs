@@ -6,7 +6,7 @@ namespace SIS.Http.HTTP
     {
         private readonly IHttpRequest request;
 
-        public HttpContext(string requestStr)
+        public HttpContext (string requestStr)
         {
             this.request = new HttpRequest(requestStr);
         }

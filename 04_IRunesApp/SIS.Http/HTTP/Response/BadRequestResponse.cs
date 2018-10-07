@@ -8,5 +8,10 @@ namespace SIS.Http.HTTP.Response
         {
             this.StatusCode = HttpStatusCode.BadRequest;
         }
+
+        public override string ToBaseString()
+        {
+            return base.ToString();
+        }
     }
 }

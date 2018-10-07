@@ -32,5 +32,8 @@ namespace SIS.Http.HTTP.Response
 
             return response.ToString();
         }
+
+        public abstract string ToBaseString();
+
     }
 }
