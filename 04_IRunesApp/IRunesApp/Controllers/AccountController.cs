@@ -112,14 +112,13 @@ namespace IRunesApp.Controllers
 
        public IHttpResponse Logout(IHttpSession session)
        {
-           if (!session.IsLoggedIn())
+           if (session.IsLoggedIn())
            {
-               return new RedirectResponse("/");
+               session.Clear();
            }
 
-           session.Clear();
 
-           return new RedirectResponse("/");
+            return new RedirectResponse("/");
        }
    }
 }

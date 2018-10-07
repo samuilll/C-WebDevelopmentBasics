@@ -1,9 +1,22 @@
-﻿<h1>Create Album</h1>
-<hr/>
-<form method="post">
-    <p>  <span>Name</span> <input type="text" required="required" name="name" placeholder="Name..." /></p>
-    <p> <span>Cover</span> <input type="text" required="required" name="cover" placeholder="Cover url..." /></p>
-    <p><input type="submit" value="Create"/></p>
-</form>
-<hr/>
-<a href="/Albums/all">Back To All</a>
+﻿<p class="text-success text-center display-3">Create album</p>
+<hr />
+<div class="d-flex justify-content-center align-items-center container ">
+    <form method="post" class="align-content-center col-6">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" name="name" class="form-control" id="name" placeholder="Name...">
+        </div>
+        <div class="form-group">
+            <label for="name">Cover</label>
+            <input type="text" name="cover" class="form-control"  placeholder="Cover...">
+        </div>
+        <div class="row">
+            <div class="col-6 text-left">
+                <button type="submit" class="btn btn-primary bg-success text-white text-left">Create</button>
+            </div>
+            <div class="col-6 text-right">
+                <a href="/Albums/all" class="btn btn-primary bg-success text-white text-right" role="button">Back to all</a>
+            </div>
+        </div>
+    </form>
+</div>

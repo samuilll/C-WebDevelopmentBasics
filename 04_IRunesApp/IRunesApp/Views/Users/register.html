@@ -1,10 +1,27 @@
-﻿<h1>Register</h1>
-<form method="post">
-    <p>  <span>Username</span> <input  type="text" required="required" name="username" placeholder="Username..." /></p>
-    <p> <span>Password</span> <input type="password" required="required" name="password" placeholder="Password..." /></p>
-    <p> <span>Confirm password</span> <input type="password" required="required" name="confirmed-password" placeholder="Confirm password..." /></p>
-    <p> <span>Email</span> <input type="email" name="email" required="required" placeholder="Email..." /></p>
-    <p><input type="submit" value="Register"/></p>
-</form>
+﻿<<p class="text-success text-center display-3">Register</p>
+<hr />
+<div class="d-flex justify-content-center align-items-center container ">
+    <form method="post" class="align-content-center col-6">
+        <div class="form-group">
+            <label for="name">Username</label>
+            <input type="text" name="username" class="form-control" id="name" placeholder="Username...">
+        </div>
+        <div class="form-group">
+            <label for="name">Password</label>
+            <input type="password" name="password" class="form-control" placeholder="Password...">
+        </div>
+        <div class="form-group">
+            <label for="name">Confirm Password</label>
+            <input type="text" name="confirmed-password" class="form-control"  placeholder="Confirm password...">
+        </div>
+        <div class="form-group">
+            <label for="name">Email</label>
+            <input type="email" name="email" class="form-control" placeholder="Cover...">
+        </div>
+        <div class="row">
+            <button type="submit" class="btn btn-primary bg-success text-white text-left">Register</button>
+        </div>
+    </form>
+</div>
 
 

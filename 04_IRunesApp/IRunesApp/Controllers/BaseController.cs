@@ -35,17 +35,19 @@ namespace IRunesApp.Controllers
         {
             this.ViewData["show-guest-welcome"] = "block";
             this.ViewData["guest-welcome"] = "<h1> Welcome to IRunes</h1>";
-            this.ViewData["albums-or-login"] = "<a href=\"/Users/login\">Login</a>";
-            this.ViewData["register-or-logout"] = "<a href=\"/Users/register\">Register</a>";
+            this.ViewData["albums-or-login"] = "<a class=\"nav-link text-white\" href=\"/Users/login\">Login</a>";
+
+            this.ViewData["register-or-logout"] = "<a class=\"nav-link text-white\" href=\"/Users/register\">Register</a>";
+
             this.ViewData["is-logged-in-view"] =
-                "<p><a href = \"/Users/login\" >Login</a> if you have account</p>" +
-                "<p><a  href = \"/Users/register\">Register</a> if you don't</p>";
+                "<p><a class=\"text-warning\" href = \"/Users/login\">Login</a> if you have account</p>" +
+                "<p><a class=\"text-warning\"  href = \"/Users/register\">Register</a> if you don't</p>";
         }
 
         protected void SetLoggedInView()
         {
-            this.ViewData["albums-or-login"] = "<a href=\"/Albums/all\">Albums</a>";
-            this.ViewData["register-or-logout"] = "<a href=\"/Users/logout\">Logout</a>";
+            this.ViewData["albums-or-login"] = "<a class=\"nav-link text-white\" href=\"/Albums/all\">Albums</a>";
+            this.ViewData["register-or-logout"] = "<a class=\"nav-link text-white\" href=\"/Users/logout\">Logout</a>";
         }
 
         protected void SetUserGreeting(string username)

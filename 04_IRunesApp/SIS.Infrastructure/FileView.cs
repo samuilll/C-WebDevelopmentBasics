@@ -11,7 +11,11 @@ namespace SIS.Infrastructure
 
         private string result;
 
-        public string Path = GlobalConstants.BasePath +"{0}{1}";
+        public const string ViewsFolder = "Views/";
+
+        public const string ResoursesFolder = "Resourses/";
+
+        public string Path = GlobalConstants.BasePath +"{0}{1}{2}";
 
         public const string DefaultExtension = ".html";
 
@@ -22,14 +26,14 @@ namespace SIS.Infrastructure
         {
             this.viewData = viewData;
 
-            this.result = this.ProcessFile(filename, DefaultExtension);
+            this.result = this.ProcessFile(filename,ViewsFolder, DefaultExtension);
 
             ReplaceDictionaryItems();
         }
 
         public FileView(string filename,string extension)
         {
-            this.result = this.ProcessFile(filename,extension);
+            this.result = this.ProcessFile(filename,ResoursesFolder,extension);
         }
 
         public string View()
@@ -38,14 +42,15 @@ namespace SIS.Infrastructure
         }
 
 
-        private string ProcessFile(string fileName,string extension)
+        private string ProcessFile(string fileName,string folder,string extension)
         {
             string result;
 
-            string fullPath = (string.Format(this.Path, fileName, extension));
+            string fullPath = (string.Format(this.Path,folder, fileName,extension));
+
             if (extension == DefaultExtension)
             {
-                string layout = File.ReadAllText(string.Format(this.Path, "layout", extension));
+                string layout = File.ReadAllText(string.Format(this.Path,folder, "layout", extension));
 
                 string file = File.ReadAllText(fullPath);
 

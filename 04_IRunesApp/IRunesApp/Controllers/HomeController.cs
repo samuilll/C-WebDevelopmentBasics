@@ -18,7 +18,7 @@ namespace IRunesApp.Controllers
 
                this.SetLoggedInView();
 
-               this.ViewData["is-logged-in-view"] = $"<h1>Welcome, {username}</h1><h3>IRunes wishes you a fun experience</h3>";
+               this.ViewData["is-logged-in-view"] = $"<h1>Welcome, <span class=\"text-warning\">{username}</span></h1><hr class=\"bg-white\" style = \"height: 2px\"/><h3>IRunes wishes you a fun experience</h3>";
             }
             else
             {
