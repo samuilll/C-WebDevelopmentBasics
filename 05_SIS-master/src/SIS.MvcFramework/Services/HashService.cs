@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Security.Cryptography;
-using System.Text;
+﻿using SIS.MvcFramework.Services.Contracts;
 
-namespace CakesWebApp.Services
+namespace SIS.MvcFramework.Services
 {
     public class HashService : IHashService
     {
@@ -30,10 +27,5 @@ namespace CakesWebApp.Services
                 return hash;
             }
         }
-    }
-
-    public interface IHashService
-    {
-        string Hash(string stringToHash);
     }
 }
