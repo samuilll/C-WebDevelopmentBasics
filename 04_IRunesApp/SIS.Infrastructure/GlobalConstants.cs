@@ -6,6 +6,6 @@ namespace SIS.Infrastructure
 {
    public class GlobalConstants
     {
-        public const string DefaultPath = "../../../../IRunesApp/Views/{0}.html";
+        public const string BasePath = "../../../../IRunesApp/";
     }
 }

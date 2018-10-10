@@ -11,5 +11,10 @@ namespace SIS.Http.HTTP.Response
 
             this.Headers.Add(new HttpHeader(HttpHeader.Location, redirectUrl));
         }
+
+        public override string ToBaseString()
+        {
+            return base.ToString();
+        }
     }
 }

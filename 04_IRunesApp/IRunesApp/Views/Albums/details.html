@@ -1,17 +1,24 @@
-﻿<hr/>
-<p><img width="100px" height="100px" src="{{{cover}}}"></p>
-<strong>Name: {{{album-name}}}</strong>
-<br/>
-<strong>Price: {{{album-price}}}</strong>
-<br/>
-<br/>
-<strong>Tracks</strong>
-<hr />
-<a href="/Tracks/create?albumId={{{albumId}}}">Create track</a>
-<hr />
-<ul>
-{{{all-tracks}}}
-</ul>
-<hr />
-<a href="/Albums/all">Back to all</a>
-
+﻿<div class="container-fluid">
+    <div>
+        <div class="row">
+            <div class=" container col-6">
+                <p><img class="col-12" src="{{{cover}}}"></p>
+                <p class="text-center"><strong>Name: {{{album-name}}}</strong></p>
+                <p class="text-center"><strong>Price: {{{album-price}}}</strong></p>
+                <div class="row">
+                    <div class="col-6 text-left">
+                        <a href="/Tracks/create?albumId={{{albumId}}}" class="btn btn-primary bg-success text-white text-right" role="button">Create Track</a>
+                    </div>
+                    <div class="col-6 text-right">
+                        <a href="/Albums/all" class="btn btn-primary bg-success text-white text-right" role="button">Back to all</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <ul>
+                    {{{all-tracks}}}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

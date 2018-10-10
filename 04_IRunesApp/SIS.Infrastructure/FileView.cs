@@ -7,54 +7,33 @@ namespace SIS.Infrastructure
 {
     public class FileView : IView
     {
-        private IDictionary<string, string> viewData = new Dictionary<string, string>();
+        private IDictionary<string, string> viewData;
 
         private string result;
 
-        public string DefaultPath = GlobalConstants.DefaultPath;
+        public const string ViewsFolder = "Views/";
+
+        public const string ResoursesFolder = "Resourses/";
+
+        public string Path = GlobalConstants.BasePath +"{0}{1}{2}";
+
+        public const string DefaultExtension = ".html";
 
         public const string ContentPlaceholder = "{{{content}}}";
 
-        public FileView(string filename,IDictionary<string,string> data)
-        {
-            this.viewData = data;
 
-            this.result = this.ProcessFileHtml(filename);
+        public FileView(string filename,IDictionary<string,string> viewData)
+        {
+            this.viewData = viewData;
+
+            this.result = this.ProcessFile(filename,ViewsFolder, DefaultExtension);
 
             ReplaceDictionaryItems();
         }
 
-        public FileView(string filename)
+        public FileView(string filename,string extension)
         {
-            this.result = this.ProcessFileHtml(filename);
-
-            ReplaceDictionaryItems();
-        }
-
-        public FileView(string path,string ext)
-        {
-            CreatePathWithExplicitExtension(path);
-
-            this.result = ProcessNonHtmlFile();
-
-            ReplaceDictionaryItems();
-        }
-
-        private void CreatePathWithExplicitExtension(string path)
-        {
-            var splitPath = this.DefaultPath.Split('/');
-
-            var splitPathWithoutLastElement = splitPath.Take(splitPath.Length - 1).ToArray();
-
-            splitPathWithoutLastElement[splitPathWithoutLastElement.Length - 1] =
-              splitPathWithoutLastElement[splitPathWithoutLastElement.Length - 1] + path;
-
-            this.DefaultPath = string.Join("/", splitPathWithoutLastElement);
-        }
-
-        private string ProcessNonHtmlFile()
-        {
-            return File.ReadAllText(this.DefaultPath);
+            this.result = this.ProcessFile(filename,ResoursesFolder,extension);
         }
 
         public string View()
@@ -63,17 +42,28 @@ namespace SIS.Infrastructure
         }
 
 
-        private string ProcessFileHtml(string fileName)
+        private string ProcessFile(string fileName,string folder,string extension)
         {
-            var layout = File.ReadAllText(string.Format(DefaultPath, "layout"));
+            string result;
 
-            var fileHtml = File.ReadAllText(string.Format(DefaultPath, fileName));
+            string fullPath = (string.Format(this.Path,folder, fileName,extension));
 
-            var result = layout.Replace(ContentPlaceholder, fileHtml);
+            if (extension == DefaultExtension)
+            {
+                string layout = File.ReadAllText(string.Format(this.Path,folder, "layout", extension));
+
+                string file = File.ReadAllText(fullPath);
+
+                result = layout.Replace(ContentPlaceholder, file);
+            }
+            else
+            {
+                result = File.ReadAllText(fullPath);
+            }
 
             return result;
         }
-
+       
 
         private void ReplaceDictionaryItems()
         {

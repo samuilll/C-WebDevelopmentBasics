@@ -30,5 +30,10 @@ namespace SIS.Http.HTTP.Response
             }
             return result.ToString();
         }
+
+        public override string ToBaseString()
+        {
+            return base.ToString();
+        }
     }
 }

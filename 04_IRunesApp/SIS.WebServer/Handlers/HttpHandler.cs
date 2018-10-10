@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using SIS.Http.Enums;
@@ -37,14 +38,20 @@ namespace SIS.WebServer.Handlers
                 const string CssFolder = "/css";
 
                 const string JsFolder = "/js";
-
-
-
+                
                 var allowedFolders = new string[] { StylesFolder,ScriptsFolder,CssFolder,JsFolder};
 
                 if (allowedFolders.Any(folder => currentPath.Contains(folder)))
                 {
-                    var extension = currentPath.Substring(currentPath.LastIndexOf('.')+1,currentPath.Length-currentPath.LastIndexOf('.')-1);
+                    string folder = allowedFolders.FirstOrDefault(f => currentPath.Contains(f));
+
+                    int lastIndexDot = currentPath.LastIndexOf('.');
+
+                    var extension = currentPath.Substring(lastIndexDot,currentPath.Length-lastIndexDot);
+
+                    currentPath = currentPath.Substring(1, currentPath.Length - extension.Length-1);
+
+                    currentPath = currentPath.Substring(currentPath.IndexOf(folder)+1);
 
                     return new TextPlainResponse(HttpStatusCode.OK, new FileView(currentPath,extension));
                 }
@@ -53,6 +60,7 @@ namespace SIS.WebServer.Handlers
                 {
                     return new RedirectResponse(loginPath);
                 }
+
 
                 var method = context.Request.RequestMethod;
                 var registeredRoutes = this.serverRouteConfig.Routes[method];
