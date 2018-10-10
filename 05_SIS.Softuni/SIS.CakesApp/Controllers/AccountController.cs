@@ -78,8 +78,7 @@ namespace CakesWebApp.Controllers
 
             // TODO: Login
 
-            // Redirect
-            return new RedirectResult("/");
+            return this.Redirect("/");
         }
 
         public IHttpResponse Login()
@@ -107,10 +106,10 @@ namespace CakesWebApp.Controllers
 
             var cookieContent = this.UserCookieService.GetUserCookie(user.Username);
 
-            var response = new RedirectResult("/");
             var cookie = new HttpCookie(".auth-cakes", cookieContent, 7) { HttpOnly = true };
-            response.Cookies.Add(cookie);
-            return response;
+
+            this.Response.Cookies.Add(cookie);
+            return this.Redirect("/");
         }
 
         public IHttpResponse Logout()
@@ -119,14 +118,13 @@ namespace CakesWebApp.Controllers
 
             if (!request.Cookies.ContainsCookie(".auth-cakes"))
             {
-                return new RedirectResult("/");
+                return this.Redirect("/");
             }
 
             var cookie = request.Cookies.GetCookie(".auth-cakes");
             cookie.Delete();
-            var response = new RedirectResult("/");
-            response.Cookies.Add(cookie);
-            return response;
+            this.Response.Cookies.Add(cookie);
+            return this.Redirect("/");
         }
     }
 }

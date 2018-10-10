@@ -26,7 +26,7 @@ ServerRoutingTable serverRoutingTable = new ServerRoutingTable();
             serverRoutingTable.Routes[HttpRequestMethod.Post]["/login"] = request =>
                 new AccountController() { Request = request }.DoLogin();
             serverRoutingTable.Routes[HttpRequestMethod.Get]["/hello"] = request =>
-                new HomeController().HelloUser();
+                new HomeController() { Request = request }.HelloUser();
             serverRoutingTable.Routes[HttpRequestMethod.Get]["/logout"] = request =>
                 new AccountController() { Request = request }.Logout();
             serverRoutingTable.Routes[HttpRequestMethod.Get]["/cakes/add"] = request =>

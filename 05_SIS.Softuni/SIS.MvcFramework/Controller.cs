@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using SIS.HTTP.Enums;
+using SIS.HTTP.Headers;
 using SIS.HTTP.Requests;
 using SIS.HTTP.Responses;
 using SIS.MvcFramework.Services;
@@ -17,9 +19,14 @@ namespace SIS.MvcFramework
         public Controller()
         {
             this.UserCookieService = new UserCookieService();
+            this.Response = new HttpResponse();
+            this.Response.StatusCode = HttpResponseStatusCode.Ok;
+
         }
 
         public IHttpRequest Request { get; set; }
+
+        public IHttpResponse Response { get; set; }
 
         protected string GetUsername()
         {
@@ -45,7 +52,10 @@ namespace SIS.MvcFramework
             }
 
             var allContent = this.GetViewContent(viewName, viewBag);
-            return new HtmlResult(allContent, HttpResponseStatusCode.Ok);
+
+            this.PrepareHtmlResult(allContent);
+
+           return this.Response;
         }
 
         protected IHttpResponse BadRequestError(string errorMessage)
@@ -54,7 +64,9 @@ namespace SIS.MvcFramework
             viewBag.Add("Error", errorMessage);
             var allContent = this.GetViewContent("Error", viewBag);
 
-            return new HtmlResult(allContent, HttpResponseStatusCode.BadRequest);
+            this.PrepareHtmlResult(allContent);
+            this.Response.StatusCode = HttpResponseStatusCode.BadRequest;
+            return this.Response;
         }
 
         protected IHttpResponse ServerError(string errorMessage)
@@ -63,14 +75,46 @@ namespace SIS.MvcFramework
             viewBag.Add("Error", errorMessage);
             var allContent = this.GetViewContent("Error", viewBag);
 
-            return new HtmlResult(allContent, HttpResponseStatusCode.InternalServerError);
+            this.PrepareHtmlResult(allContent);
+            this.Response.StatusCode = HttpResponseStatusCode.InternalServerError;
+           return this.Response;
         }
 
+        public IHttpResponse File(byte[] content)
+        {
+            this.Response.Headers.Add(new HttpHeader(HttpHeader.ContentLength,content.Length.ToString()));
+            this.Response.Headers.Add(new HttpHeader(HttpHeader.ContentDisposition, "inline"));
+            this.Response.Content = content;
+
+            return this.Response;
+        }
+
+        public IHttpResponse Redirect(string location)
+        {
+            this.Response.Headers.Add(new HttpHeader(HttpHeader.Location, location));
+            this.Response.StatusCode = HttpResponseStatusCode.Redirect;
+
+            return this.Response;
+        }
+
+        public IHttpResponse Text(string content)
+        {
+            this.Response.Headers.Add(new HttpHeader(HttpHeader.ContentType, "text/plain; charset=utf-8"));
+            this.Response.Content = Encoding.UTF8.GetBytes(content);
+
+            return this.Response;
+        }
+
+        private void PrepareHtmlResult(string content)
+        {
+            this.Response.Headers.Add(new HttpHeader(HttpHeader.ContentType, "text/html; charset=utf-8"));
+            this.Response.Content = Encoding.UTF8.GetBytes(content);
+        }
         private string GetViewContent(string viewName,
             IDictionary<string, string> viewBag)
         {
-            var layoutContent = File.ReadAllText("Views/_Layout.html");
-            var content = File.ReadAllText("Views/" + viewName + ".html");
+            var layoutContent = System.IO.File.ReadAllText("Views/_Layout.html");
+            var content = System.IO.File.ReadAllText("Views/" + viewName + ".html");
             foreach (var item in viewBag)
             {
                 content = content.Replace("@Model." + item.Key, item.Value);
@@ -79,5 +123,7 @@ namespace SIS.MvcFramework
             var allContent = layoutContent.Replace("@RenderBody()", content);
             return allContent;
         }
+
+       
     }
 }
