@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
-namespace CakesWebApp.Models
+namespace SIS.CakesApp.Models
 {
     public class Order : BaseModel<int>
     {

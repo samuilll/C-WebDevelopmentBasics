@@ -92,7 +92,7 @@ namespace SIS.MvcFramework
         public IHttpResponse Redirect(string location)
         {
             this.Response.Headers.Add(new HttpHeader(HttpHeader.Location, location));
-            this.Response.StatusCode = HttpResponseStatusCode.Redirect;
+            this.Response.StatusCode = HttpResponseStatusCode.PermanentRedirect;
 
             return this.Response;
         }

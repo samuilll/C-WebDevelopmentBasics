@@ -1,15 +1,13 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.Internal;
+using System.Linq;
+using SIS.CakesApp.Models;
+using SIS.HTTP.Cookies;
 using SIS.HTTP.Requests;
 using SIS.HTTP.Responses;
-using SIS.WebServer.Results;
-using System.Linq;
-using CakesWebApp.Models;
-using SIS.HTTP.Cookies;
-using SIS.MvcFramework.Services.Contracts;
 using SIS.MvcFramework.Services;
+using SIS.MvcFramework.Services.Contracts;
 
-namespace CakesWebApp.Controllers
+namespace SIS.CakesApp.Controllers
 {
     public class AccountController : BaseController
     {

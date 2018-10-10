@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using CakesWebApp.Extensions;
-using CakesWebApp.Models;
+using SIS.CakesApp.Extensions;
+using SIS.CakesApp.Models;
 using SIS.HTTP.Requests;
 using SIS.HTTP.Responses;
-using SIS.WebServer.Results;
 
-namespace CakesWebApp.Controllers
+namespace SIS.CakesApp.Controllers
 {
     public class CakesController : BaseController
     {

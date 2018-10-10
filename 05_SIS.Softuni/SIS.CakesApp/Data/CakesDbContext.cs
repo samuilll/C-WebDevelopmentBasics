@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using CakesWebApp.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using SIS.CakesApp.Models;
 
-namespace CakesWebApp.Data
+namespace SIS.CakesApp.Data
 {
     public class CakesDbContext : DbContext
     {

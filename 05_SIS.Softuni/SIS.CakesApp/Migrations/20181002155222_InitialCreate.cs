@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace CakesWebApp.Migrations
+namespace SIS.CakesApp.Migrations
 {
     public partial class InitialCreate : Migration
     {

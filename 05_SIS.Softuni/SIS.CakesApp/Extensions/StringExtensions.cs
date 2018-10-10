@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Text;
+﻿using System.Net;
 
-namespace CakesWebApp.Extensions
+namespace SIS.CakesApp.Extensions
 {
     public static class StringExtensions
     {

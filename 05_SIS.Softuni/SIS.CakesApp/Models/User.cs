@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace CakesWebApp.Models
+namespace SIS.CakesApp.Models
 {
     public class User : BaseModel<int>
     {

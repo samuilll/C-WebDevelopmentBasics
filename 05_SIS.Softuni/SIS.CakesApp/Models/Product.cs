@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace CakesWebApp.Models
+namespace SIS.CakesApp.Models
 {
     public class Product : BaseModel<int>
     {

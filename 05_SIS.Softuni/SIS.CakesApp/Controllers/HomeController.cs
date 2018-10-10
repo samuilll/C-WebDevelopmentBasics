@@ -1,10 +1,7 @@
 ﻿using System.Collections.Generic;
-using SIS.HTTP.Enums;
-using SIS.HTTP.Requests;
 using SIS.HTTP.Responses;
-using SIS.WebServer.Results;
 
-namespace CakesWebApp.Controllers
+namespace SIS.CakesApp.Controllers
 {
     public class HomeController : BaseController
     {
