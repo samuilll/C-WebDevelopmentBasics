@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2047
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SIS.HTTP", "SIS.HTTP\SIS.HTTP.csproj", "{F15A3D22-B34A-4FAD-9B87-1EB7C74CDEBA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SIS.WebServer", "SIS.WebServer\SIS.WebServer.csproj", "{361A798A-BB63-4533-AD43-98B7E6ACBAA5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SIS.MvcFramework", "SIS.MvcFramework\SIS.MvcFramework.csproj", "{1098AC62-73EF-4F74-B4DD-9C5E6CF4E350}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SIS.CakesApp", "SIS.CakesApp\SIS.CakesApp.csproj", "{E2806A25-C7EB-4306-BE70-8CC439F30F20}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F15A3D22-B34A-4FAD-9B87-1EB7C74CDEBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F15A3D22-B34A-4FAD-9B87-1EB7C74CDEBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F15A3D22-B34A-4FAD-9B87-1EB7C74CDEBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F15A3D22-B34A-4FAD-9B87-1EB7C74CDEBA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{361A798A-BB63-4533-AD43-98B7E6ACBAA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{361A798A-BB63-4533-AD43-98B7E6ACBAA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{361A798A-BB63-4533-AD43-98B7E6ACBAA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{361A798A-BB63-4533-AD43-98B7E6ACBAA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1098AC62-73EF-4F74-B4DD-9C5E6CF4E350}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1098AC62-73EF-4F74-B4DD-9C5E6CF4E350}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1098AC62-73EF-4F74-B4DD-9C5E6CF4E350}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1098AC62-73EF-4F74-B4DD-9C5E6CF4E350}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2806A25-C7EB-4306-BE70-8CC439F30F20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2806A25-C7EB-4306-BE70-8CC439F30F20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2806A25-C7EB-4306-BE70-8CC439F30F20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2806A25-C7EB-4306-BE70-8CC439F30F20}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0B229434-8F4C-4728-B9EF-B69DC8B5DC7F}
+	EndGlobalSection
+EndGlobal
