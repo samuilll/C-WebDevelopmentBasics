@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="IRunesWebApp\IRunesWebApp.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="IRunesWebApp\bin\Debug\netcoreapp2.1\" />
+  </ItemGroup>
+
+</Project>
