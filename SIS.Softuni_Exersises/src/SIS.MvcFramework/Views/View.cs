@@ -14,14 +14,16 @@ namespace SIS.MvcFramework.Views
 
        private string ReadFile(string fullyQualifiedTemplateName)
        {
+            string getCurrentDirectoryPath = Directory.GetCurrentDirectory();
+
            bool exist = File.Exists(fullyQualifiedTemplateName);
 
-           if (!exist)
-           {
-               throw new FileNotFoundException($"View does not exist at {fullyQualifiedTemplateName}");
-           }
+           //if (!exist)
+           //{
+           //    throw new FileNotFoundException($"View does not exist at {fullyQualifiedTemplateName}");
+           //}
 
-           string result = File.ReadAllText(this.fullyQualifiedTemplateName);
+           string result = File.ReadAllText(fullyQualifiedTemplateName);
 
            return result;
        }

@@ -9,10 +9,12 @@
 
       public static string GetViewFullyQualifiedName(string controller, string action)
           => string.Format(
-              "{0}\\{1}\\{2}",
+              @"{0}\{1}\{2}\{3}.{4}",
+              MvcContext.Get.RootDirectoryRelativePath,
               MvcContext.Get.ViewsFolder,
               controller,
-              action
+              action,
+              MvcContext.Get.HtmlFileExtension
           );
   }
 }

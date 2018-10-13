@@ -20,12 +20,12 @@ namespace SIS.WebServer
 
         private bool isRunning;
 
-        public Server(int port, ServerRoutingTable serverRoutingTable)
+        public Server(int port, IHttpHandler handler)
         {
             this.port = port;
             this.listener = new TcpListener(IPAddress.Parse(LocalhostIpAddress), port);
 
-            this.handler = new HttpHandler(serverRoutingTable);
+            this.handler = handler;
         }
 
         public void Run()

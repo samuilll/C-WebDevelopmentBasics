@@ -8,11 +8,12 @@ using SIS.HTTP.Cookies;
 using SIS.HTTP.Enums;
 using SIS.HTTP.Requests;
 using SIS.HTTP.Responses;
+using SIS.MvcFramework.Controllers;
 using SIS.WebServer.Results;
 
 namespace IRunesWebApp.Controllers
 {
-    public abstract class BaseController
+    public abstract class BaseController:Controller
     {       
         private const string RootDirectoryRelativePath = "../../../";
 

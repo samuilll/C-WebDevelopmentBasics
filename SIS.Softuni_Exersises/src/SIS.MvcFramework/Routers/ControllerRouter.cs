@@ -2,17 +2,39 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using SIS.HTTP.Enums;
 using SIS.HTTP.Requests;
 using SIS.HTTP.Responses;
 using SIS.MvcFramework.ActionResults.Contracts;
 using SIS.MvcFramework.Attributes.Methods;
 using SIS.MvcFramework.Controllers;
 using SIS.WebServer.Api.Contracts;
+using SIS.WebServer.Results;
 
 namespace SIS.MvcFramework.Routers
 {
     public class ControllerRouter : IHttpHandler
     {
+
+        private Controller GetController(string controllerName, IHttpRequest request)
+        {
+            if (string.IsNullOrWhiteSpace(controllerName))
+            {
+                return null;
+            }
+
+
+            var fullyQualifiedControllerName = string.Format("{0}.{1}.{2}{3}, {0}",
+                MvcContext.Get.AssemblyName,
+                MvcContext.Get.ControllersFolder,
+                controllerName,
+                MvcContext.Get.ControllerSuffix);
+
+            var controllerType = Type.GetType(fullyQualifiedControllerName);
+            var controller = (Controller)Activator.CreateInstance(controllerType);
+            return controller;
+        }
+
         public IHttpResponse Handle(IHttpRequest request)
         {
             var controllerName = string.Empty;
@@ -38,10 +60,10 @@ namespace SIS.MvcFramework.Routers
             // handle => result
 
             //Controller
-            var controller = this.GetController(controllerName, request);
+            Controller controller = this.GetController(controllerName, request);
 
             //Action
-            var action = this.GetAction(requestMethod, controller, actionName);
+            MethodInfo action = this.GetAction(requestMethod, controller, actionName);
 
             if (controller == null || action == null)
             {
@@ -54,8 +76,21 @@ namespace SIS.MvcFramework.Routers
         private IHttpResponse PrepareResponse(Controller controller, MethodInfo action)
         {
             IActionResult actionResult = (IActionResult)action.Invoke(controller, null);
-            string invocationType = actionResult.Invoke();
-            return null;
+
+            string invocationResult = actionResult.Invoke();
+
+            if (actionResult is IViewable)
+            {
+                return new HtmlResult(invocationResult, HttpResponseStatusCode.Ok);
+            }
+            else if (actionResult is IRedirectable)
+            {
+                return new RedirectResult(invocationResult);
+            }
+            else
+            {
+                throw new InvalidOperationException("The view result is not supported");
+            }
         }
 
 
@@ -112,25 +147,6 @@ namespace SIS.MvcFramework.Routers
                 .GetType()
                 .GetMethods()
                 .Where(mi => mi.Name.ToLower() == actionName.ToLower());
-        }
-
-        private Controller GetController(string controllerName, IHttpRequest request)
-        {
-            if (string.IsNullOrWhiteSpace(controllerName))
-            {
-                return null;
-            }
-
-
-            var fullyQualifiedControllerName = string.Format("{0}.{1}.{2}{3}, {0}",
-                MvcContext.Get.AssemblyName,
-                MvcContext.Get.ControllersFolder,
-                controllerName,
-                MvcContext.Get.ControllerSuffix);
-
-            var controllerType = Type.GetType(fullyQualifiedControllerName);
-            var controller = (Controller)Activator.CreateInstance(controllerType);
-            return controller;
         }
     }
 }
