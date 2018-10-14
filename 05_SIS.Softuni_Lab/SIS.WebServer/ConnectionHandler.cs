@@ -128,11 +128,11 @@ namespace SIS.WebServer
             }
             catch (BadRequestException e)
             {
-                await this.PrepareResponse(new TextResult(e.Message, HttpResponseStatusCode.BadRequest));
+                await this.PrepareResponse(new TextResult(e.Message+Environment.NewLine+e.StackTrace, HttpResponseStatusCode.BadRequest));
             }
             catch (Exception e)
             {
-                await this.PrepareResponse(new TextResult(e.Message, HttpResponseStatusCode.InternalServerError));
+                await this.PrepareResponse(new TextResult(e.Message + Environment.NewLine + e.StackTrace, HttpResponseStatusCode.InternalServerError));
             }
 
             this.client.Shutdown(SocketShutdown.Both);

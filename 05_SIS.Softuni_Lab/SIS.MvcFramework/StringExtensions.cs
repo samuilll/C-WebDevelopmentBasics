@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace SIS.CakesApp.Extensions
+namespace SIS.MvcFramework
 {
     public static class StringExtensions
     {

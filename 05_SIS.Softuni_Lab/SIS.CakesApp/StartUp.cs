@@ -1,42 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using SIS.CakesApp.Controllers;
-using SIS.HTTP.Enums;
+﻿using SIS.CakesApp.Controllers;
 using SIS.MvcFramework;
-using SIS.WebServer.Routing;
-
+using SIS.MvcFramework.Logger;
+using SIS.MvcFramework.Services;
+using SIS.MvcFramework.Services.Contracts;
 namespace SIS.CakesApp
 {
   public  class StartUp:IMvcApplication
     {
-        public void Configure(ServerRoutingTable routing)
-        {
-            routing.Routes[HttpRequestMethod.Get]["/"] = request =>
-                new HomeController() { Request = request }.Index();
-            routing.Routes[HttpRequestMethod.Get]["/register"] = request =>
-                new AccountController() { Request = request }.Register();
-            routing.Routes[HttpRequestMethod.Get]["/login"] = request =>
-                new AccountController() { Request = request }.Login();
-            routing.Routes[HttpRequestMethod.Post]["/register"] = request =>
-                new AccountController() { Request = request }.DoRegister();
-            routing.Routes[HttpRequestMethod.Post]["/login"] = request =>
-                new AccountController() { Request = request }.DoLogin();
-            routing.Routes[HttpRequestMethod.Get]["/hello"] = request =>
-                new HomeController() { Request = request }.HelloUser();
-            routing.Routes[HttpRequestMethod.Get]["/logout"] = request =>
-                new AccountController() { Request = request }.Logout();
-            routing.Routes[HttpRequestMethod.Get]["/cakes/add"] = request =>
-                new CakesController() { Request = request }.AddCakes();
-            routing.Routes[HttpRequestMethod.Post]["/cakes/add"] = request =>
-                new CakesController() { Request = request }.DoAddCakes();
-            // cakes/view?id=1
-            routing.Routes[HttpRequestMethod.Get]["/cakes/view"] = request =>
-                new CakesController() { Request = request }.ById();
+        public void Configure()
+        { 
         }
 
-        public void ConfigureServices()
+        public void ConfigureServices(IServiceCollection collection)
         {
+            collection.AddService<IHashService, HashService>();
+            collection.AddService<IUserCookieService, UserCookieService>();
+            collection.AddService<ILogger, FileLogger>();
         }
     }
 }

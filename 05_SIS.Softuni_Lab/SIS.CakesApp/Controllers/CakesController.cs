@@ -2,27 +2,29 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using SIS.CakesApp.Extensions;
 using SIS.CakesApp.Models;
+using SIS.CakesApp.ViewModels;
 using SIS.HTTP.Requests;
 using SIS.HTTP.Responses;
+using SIS.MvcFramework.Attributes.HttpAttributes;
 
 namespace SIS.CakesApp.Controllers
 {
     public class CakesController : BaseController
     {
+        [HttpGet("/cakes/add")]
         public IHttpResponse AddCakes()
         {
             return this.View("AddCakes");
         }
-
-        public IHttpResponse DoAddCakes()
+        [HttpPost("/cakes/add")]
+        public IHttpResponse DoAddCakes(DoAddCakeInputModel model)
         {
             IHttpRequest request = this.Request;
 
-            var name = request.FormData["name"].ToString().Trim().UrlDecode();
-            var price = decimal.Parse(request.FormData["price"].ToString().UrlDecode());
-            var picture = request.FormData["picture"].ToString().Trim().UrlDecode();
+            var name = model.Name;
+            var price = model.Price;
+            var picture = model.Picture;
 
             // TODO: Validation
 
@@ -47,7 +49,7 @@ namespace SIS.CakesApp.Controllers
             // Redirect
             return this.Redirect("/");
         }
-
+        [HttpGet("/cakes/view")]
         public IHttpResponse ById()
         {
             IHttpRequest request = this.Request;

@@ -42,4 +42,12 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\NewFolder\" />
+    <Folder Include="Extensions\" />
+    <Folder Include="ViewModels\Account\NewFolder\" />
+    <Folder Include="ViewModels\Home\" />
+    <Folder Include="ViewModels\Cakes\" />
+  </ItemGroup>
+
 </Project>

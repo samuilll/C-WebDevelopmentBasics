@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Linq;
 using SIS.CakesApp.Models;
+using SIS.CakesApp.ViewModels;
+using SIS.CakesApp.ViewModels.Account;
 using SIS.HTTP.Cookies;
 using SIS.HTTP.Requests;
 using SIS.HTTP.Responses;
+using SIS.MvcFramework;
+using SIS.MvcFramework.Attributes.HttpAttributes;
 using SIS.MvcFramework.Services;
 using SIS.MvcFramework.Services.Contracts;
 
@@ -11,25 +15,25 @@ namespace SIS.CakesApp.Controllers
 {
     public class AccountController : BaseController
     {
-        private IHashService hashService;
+        private readonly IHashService hashService;
 
-        public AccountController()
+        public AccountController(IHashService hashService)
         {
-            this.hashService = new HashService();
+            this.hashService = hashService;
         }
 
+        [HttpGet("/register")]
         public IHttpResponse Register()
         {
             return this.View("Register");
         }
-
-        public IHttpResponse DoRegister()
+        [HttpPost("/register")]
+        public IHttpResponse DoRegister(DoRegisterInputModel model)
         {
-            IHttpRequest request = this.Request;
 
-            var userName = request.FormData["username"].ToString().Trim();
-            var password = request.FormData["password"].ToString();
-            var confirmPassword = request.FormData["confirmPassword"].ToString();
+            var userName = model.Username;
+            var password = model.Password;
+            var confirmPassword = model.ConfirmPassword;
 
             // Validate
             if (string.IsNullOrWhiteSpace(userName) || userName.Length < 4)
@@ -78,18 +82,19 @@ namespace SIS.CakesApp.Controllers
 
             return this.Redirect("/");
         }
-
+        [HttpGet("/login")]
         public IHttpResponse Login()
         {
             return this.View("Login");
         }
 
-        public IHttpResponse DoLogin()
+        [HttpPost("/login")]
+        public IHttpResponse DoLogin(DoLoginInputModel model)
         {
             IHttpRequest request = this.Request;
 
-            var userName = request.FormData["username"].ToString().Trim();
-            var password = request.FormData["password"].ToString();
+            var userName = model.Username;
+            var password = model.Password;
 
             var hashedPassword = this.hashService.Hash(password);
 
@@ -109,7 +114,7 @@ namespace SIS.CakesApp.Controllers
             this.Response.Cookies.Add(cookie);
             return this.Redirect("/");
         }
-
+        [HttpGet("/logout")]
         public IHttpResponse Logout()
         {
             IHttpRequest request = this.Request;

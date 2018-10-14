@@ -14,34 +14,33 @@ namespace SIS.MvcFramework
 {
     public abstract class Controller
     {
-        protected IUserCookieService UserCookieService { get; }
+        public IUserCookieService UserCookieService { get;internal set; }
 
-        public Controller()
+        protected Controller()
         {
-            this.UserCookieService = new UserCookieService();
-            this.Response = new HttpResponse();
-            this.Response.StatusCode = HttpResponseStatusCode.Ok;
-
+            this.Response = new HttpResponse { StatusCode = HttpResponseStatusCode.Ok };
         }
 
         public IHttpRequest Request { get; set; }
 
         public IHttpResponse Response { get; set; }
 
-        protected string GetUsername()
+        protected string User
         {
-            IHttpRequest request = this.Request;
-
-            if (!request.Cookies.ContainsCookie(".auth-cakes"))
+            get
             {
-                return null;
+                IHttpRequest request = this.Request;
+
+                if (!request.Cookies.ContainsCookie(".auth-cakes"))
+                {
+                    return null;
+                }
+
+                var cookie = this.Request.Cookies.GetCookie(".auth-cakes");
+                var cookieContent = cookie.Value;
+                var userName = this.UserCookieService.GetUserData(cookieContent);
+                return userName;
             }
-
-            var cookie = this.Request.Cookies.GetCookie(".auth-cakes");
-            var cookieContent = cookie.Value;
-            var userName = this.UserCookieService.GetUserData(cookieContent);
-            return userName;
-
         }
 
         protected IHttpResponse View(string viewName, IDictionary<string, string> viewBag = null)
@@ -52,9 +51,7 @@ namespace SIS.MvcFramework
             }
 
             var allContent = this.GetViewContent(viewName, viewBag);
-
             this.PrepareHtmlResult(allContent);
-
            return this.Response;
         }
 
